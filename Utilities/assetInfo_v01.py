@@ -11,7 +11,8 @@ class AssetInfo(object):
         if "MAYA_PROJECT_PATH" in os.environ:
             self.basePath = os.environ["MAYA_PROJECT_PATH"]
         else: 
-            cmds.error("assetInfo.__init__: couldn't find the MAYA_PROJECT_PATH environment variable. See a TD!")
+            self.basePath = "X:/Production"
+            #cmds.error("assetInfo.__init__: couldn't find the MAYA_PROJECT_PATH environment variable. See a TD!")
         self.charPath = uf.fix_path(os.path.join(self.basePath, "Assets/3D/Character/"))
         self.propPath = uf.fix_path(os.path.join(self.basePath, "Assets/3D/Props/"))
         self.setPath = uf.fix_path(os.path.join(self.basePath, "Assets/3D/Sets/"))

@@ -20,6 +20,8 @@ reload(snw)
 # image?
 # find a way to consolidate project names, env variables, etc to populate the list here and in project setter, etc  
 
+print "ldkjsf;ldkjsf;laskfj;laskfj"
+
 proj = ai.AssetInfo()
 widgets = {}
 

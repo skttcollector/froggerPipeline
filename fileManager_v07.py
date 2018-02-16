@@ -22,6 +22,8 @@ reload(sp)
 # image?
 # find a way to consolidate project names, env variables, etc to populate the list here and in project setter, etc  
 
+# TURN THIS VERSION INTO A CLASS? Will this allow us to back up and rerun load asset info? Should do, cuz then we can reset the ai.AssetInfo() 
+
 proj = ai.AssetInfo()
 widgets = {}
 
