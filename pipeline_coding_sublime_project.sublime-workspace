@@ -1,0 +1,1037 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"file",
+				"fileManager_v06"
+			],
+			[
+				"curr",
+				"currProj"
+			],
+			[
+				"MAYA",
+				"MAYA_CURRENT_PROJECT"
+			],
+			[
+				"set",
+				"set_project_env_variables"
+			],
+			[
+				"pub",
+				"pubFbxPath"
+			],
+			[
+				"check",
+				"checkBoxGrp"
+			],
+			[
+				"col",
+				"columnLayout"
+			],
+			[
+				"lsi",
+				"listdir"
+			],
+			[
+				"mb",
+				"mbState"
+			],
+			[
+				"fin",
+				"finish_up"
+			],
+			[
+				"publis",
+				"publish_fbx_folder"
+			],
+			[
+				"Pu",
+				"publishState"
+			],
+			[
+				"version",
+				"versionNum"
+			],
+			[
+				"var",
+				"variantOM"
+			],
+			[
+				"refere",
+				"references"
+			],
+			[
+				"publish",
+				"publish_fbx_anim_file"
+			],
+			[
+				"re",
+				"references"
+			],
+			[
+				"reference",
+				"referenceQuery"
+			],
+			[
+				"good",
+				"goodRefs"
+			],
+			[
+				"pubfile",
+				"pubFileName"
+			],
+			[
+				"pubFb",
+				"pubfbxfile"
+			],
+			[
+				"stage",
+				"stageAnmWorkFiles"
+			],
+			[
+				"export",
+				"exportList"
+			],
+			[
+				"full",
+				"fullKeepList"
+			],
+			[
+				"pathP",
+				"pathP"
+			],
+			[
+				"ver",
+				"versionString"
+			],
+			[
+				"fbx",
+				"fbxfolder"
+			],
+			[
+				"varian",
+				"variant_dict"
+			],
+			[
+				"get_v",
+				"get_versions_list"
+			],
+			[
+				"phase",
+				"phasePath"
+			],
+			[
+				"vari",
+				"variantList"
+			],
+			[
+				"get",
+				"get_variants_list"
+			],
+			[
+				"get_var",
+				"get_variants_list"
+			],
+			[
+				"svae",
+				"save_current_dialog"
+			],
+			[
+				"pathpar",
+				"pathparse"
+			],
+			[
+				"path",
+				"pathparse"
+			],
+			[
+				"vers",
+				"versionNumbersString"
+			],
+			[
+				"versions",
+				"versionNumbersString"
+			],
+			[
+				"pubF",
+				"pubFbxPath"
+			],
+			[
+				"mayapu",
+				"mayapubpathRaw"
+			],
+			[
+				"allN",
+				"allNs"
+			],
+			[
+				"keep",
+				"keepList"
+			],
+			[
+				"name",
+				"namespace"
+			],
+			[
+				"char",
+				"charsPaths"
+			],
+			[
+				"stages",
+				"stagesPaths"
+			],
+			[
+				"props",
+				"propsPaths"
+			],
+			[
+				"De",
+				"delete_other_top_level_nodes"
+			],
+			[
+				"maya",
+				"mayapubpath"
+			],
+			[
+				"pathPa",
+				"pathParse"
+			],
+			[
+				"versionNu",
+				"versionNumbersString"
+			],
+			[
+				"pathPar",
+				"PathParser"
+			],
+			[
+				"change",
+				"change_variant"
+			],
+			[
+				"get_",
+				"get_version_up_name"
+			],
+			[
+				"text",
+				"textFieldGrp"
+			],
+			[
+				"temp",
+				"tempScene"
+			],
+			[
+				"creat",
+				"create_temp_scene"
+			],
+			[
+				"sel",
+				"selBased"
+			],
+			[
+				"sele",
+				"selectionBased"
+			],
+			[
+				"rig",
+				"rigFBXExport"
+			],
+			[
+				"ass",
+				"assPub"
+			],
+			[
+				"child",
+				"child_match_check"
+			],
+			[
+				"load",
+				"load_layout"
+			],
+			[
+				"is",
+				"isdir"
+			],
+			[
+				"stag",
+				"stageValue"
+			],
+			[
+				"pubFile",
+				"pubFilePath"
+			],
+			[
+				"corr",
+				"correspond"
+			],
+			[
+				"jnt",
+				"jntGrp"
+			],
+			[
+				"publi",
+				"publish_fbx_file"
+			],
+			[
+				"roo",
+				"rootJnts"
+			],
+			[
+				"orig",
+				"origScene"
+			],
+			[
+				"browser",
+				"browserFolder"
+			],
+			[
+				"filepath",
+				"filepath"
+			],
+			[
+				"phas",
+				"phaseOM"
+			],
+			[
+				"form",
+				"formLayout"
+			],
+			[
+				"asset",
+				"assetOM"
+			],
+			[
+				"assetType",
+				"assetTypeOM"
+			],
+			[
+				"assetTyp",
+				"assetTypeOM"
+			],
+			[
+				"sce",
+				"scenesDir"
+			],
+			[
+				"menu",
+				"menuItem"
+			],
+			[
+				"curre",
+				"currFile"
+			],
+			[
+				"pahse",
+				"phasePath"
+			],
+			[
+				"fix",
+				"fix_path"
+			],
+			[
+				"fil",
+				"filter"
+			],
+			[
+				"assetFile",
+				"assetFilesRaw"
+			],
+			[
+				"assFile",
+				"assetFilesRaw"
+			],
+			[
+				"assetFil",
+				"assetFilesRaw"
+			],
+			[
+				"increm",
+				"incrementedName"
+			],
+			[
+				"clear",
+				"clear_ref_list"
+			],
+			[
+				"namesp",
+				"namespaceList"
+			],
+			[
+				"v",
+				"vchange"
+			],
+			[
+				"naem",
+				"namespace"
+			],
+			[
+				"na",
+				"name"
+			],
+			[
+				"pend",
+				"pendingRefs"
+			],
+			[
+				"pe",
+				"pendingObjList"
+			],
+			[
+				"current",
+				"currentRefs"
+			],
+			[
+				"cure",
+				"currentRefList"
+			],
+			[
+				"pen",
+				"pendingRefList"
+			],
+			[
+				"incre",
+				"incrementedName"
+			],
+			[
+				"crea",
+				"create_namespace"
+			],
+			[
+				"namespace",
+				"namespaceList"
+			],
+			[
+				"proj",
+				"projectGlobals"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"lo",
+				"loadBut"
+			],
+			[
+				"chec",
+				"check_vnum_against_current"
+			],
+			[
+				"obje",
+				"objectList"
+			],
+			[
+				"sta",
+				"stateBut"
+			],
+			[
+				"obj",
+				"objectList"
+			],
+			[
+				"Refere",
+				"ReferenceObject"
+			],
+			[
+				"create",
+				"create_new_ref"
+			],
+			[
+				"rigPub",
+				"rigPubPath"
+			],
+			[
+				"mdlPu",
+				"mdlPubPath"
+			],
+			[
+				"anmP",
+				"anmPubPath"
+			],
+			[
+				"__",
+				"__del__"
+			],
+			[
+				"kill",
+				"killBut"
+			],
+			[
+				"cur",
+				"currentRefList"
+			],
+			[
+				"REf",
+				"ReferenceObject"
+			],
+			[
+				"Re",
+				"ReferenceObject"
+			],
+			[
+				"men",
+				"menuItem"
+			],
+			[
+				"replace",
+				"replace_ref"
+			],
+			[
+				"ma",
+				"mainFLO"
+			],
+			[
+				"option",
+				"optionMenu"
+			],
+			[
+				"def",
+				"deferred"
+			],
+			[
+				"me",
+				"menuItem"
+			],
+			[
+				"asse",
+				"asset_UI_create"
+			],
+			[
+				"loa",
+				"load_asset_info"
+			],
+			[
+				"save",
+				"save_current_dialog"
+			],
+			[
+				"open",
+				"open_selected"
+			],
+			[
+				"tab",
+				"tabLayout"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Utilities/utilityFunctions_v01.py",
+			"settings":
+			{
+				"buffer_size": 8945,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "fileManager_v06.py",
+			"settings":
+			{
+				"buffer_size": 18477,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/zethwillie/Desktop/zeth/rigConvertToFlat.py",
+			"settings":
+			{
+				"buffer_size": 240,
+				"line_ending": "Windows",
+				"name": "import maya.cmds as cmds"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Anim",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/fbxPresets",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities"
+	],
+	"file_history":
+	[
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/setProject.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/assetInfo_v01.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/FroggerMenu_v01.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/AssetPublish_v06.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/FroggerMenu_v02.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/multiRefAnimExport_v07.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/projectGlobals.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/fileManager_v04.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/userSetup.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/assetManager_v02.py",
+		"/C/Users/zethwillie/Desktop/zeth/python_wip/projectStructure_snippet.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/multiRefAnimExport_v06.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/multiRefAnimExport_v03.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/setupBackgroundPublish.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/multiRefAnimExport_v05.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/multiRefAnimExport_v04.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/fileManager_v05.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/setAndRunGameExporter.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/AssetPublish_v05.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/assetInfo.py",
+		"/C/Users/zethwillie/Desktop/gameExportPresetExample.mel",
+		"/C/Users/zethwillie/Desktop/chrlx_pipe-master/backgroundMaster.py",
+		"/C/Users/zethwillie/Desktop/chrlx_pipe-master/masterFuncs.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/AssetPublish_v04.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/publishOutGameExportFiles.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/utilityFunctions.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/fbxPresets/rig_cm_ascii_noAnim_triangulate_noConn.fbxexportpreset",
+		"/C/Program Files/Autodesk/Maya2016/scripts/others/gameFbxExporter.mel",
+		"/X/Production/Assets/3D/Character/Fox/Animation/Publish/FBX/FULLRANGE_v0012/FoxCycles_frameTest.fbx",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/backgroundPublish.py",
+		"/C/Users/zethwillie/Desktop/zeth/zTools/rig/zbw_randomNoise_string.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/fbxPresets/model_cm_ascii_noAnim_inputs_triangulate.fbxexportpreset",
+		"/C/Users/zethwillie/Desktop/zeth/zTools/anim/zbw_animNoise.py",
+		"/C/Users/zethwillie/Desktop/zeth/python_wip/randomJntUV.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/assetManager.py",
+		"/C/Users/zethwillie/Desktop/zeth/zTools/rig/zbw_rig.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/updateAllReferences.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/multiRefAnimExport_v01.py",
+		"/C/Users/zethwillie/AppData/Local/Temp/Temp1_extractDeltas.zip/extractDeltas/plug-ins/extractDeltas.py",
+		"/X/Production/Assets/3D/Character/emojiSunglasses/Rigging/Publish/FBX/emojiSunglasses_main_Rigging_emoji_v0009.fbx",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/Cali_Scale_Cm.fbxexportpreset",
+		"/X/Production/Assets/3D/Character/emojiSunglasses/Rigging/Publish/FBX/emojiSunglasses_main_Rigging_emoji_v0007.fbx",
+		"/X/Production/Assets/3D/Character/emojiSunglasses/Animation/Publish/FBX/v0008/emojiSunglasse_main_Animation_emoji_v0008.fbx",
+		"/X/Production/Assets/3D/Character/emojiSunglasses/Animation/Publish/FBX/v0006/emojiSunglasses_main_Animation_emoji_v0006.fbx",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/AssetPublish_v03.py",
+		"/C/Users/zethwillie/Desktop/regualrExp.fbx",
+		"/C/Users/zethwillie/Desktop/gameExp.fbx",
+		"/C/Users/zethwillie/Desktop/testMultExp.fbx",
+		"/C/Users/zethwillie/Desktop/testAssass.fbx",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/saveNewWindows.py",
+		"/C/Users/zethwillie/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/zethwillie/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/zethwillie/Desktop/zeth/zTools/anim/zbw_animTools.py",
+		"/C/Users/zethwillie/Desktop/zeth/zTools/anim/zbw_animShift.py",
+		"/C/Users/zethwillie/Desktop/zeth/zTools/anim/zbw_delay.py",
+		"/C/Users/zethwillie/Desktop/zeth/python_wip/transferAnim.py",
+		"/C/Users/zethwillie/Desktop/zeth/python_wip/shitIWroteAtBuck.py",
+		"/C/Program Files/Autodesk/Maya2017/scripts/others/gameFbxExporterAnim.mel",
+		"/C/Program Files/Autodesk/Maya2017/scripts/others/gameFbxExporter.mel",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/fileManager.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/zbRigExport.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/AssetPublish_v02.py",
+		"/C/Users/zethwillie/Desktop/pipe/chrlx_pipe/chrlxFuncs.py",
+		"/C/Users/zethwillie/Documents/maya/2016/presets/attrPresets/gameFbxExporter/testAnimExport1.mel",
+		"/C/Program Files/Autodesk/Maya2016/scripts/others/gameFbxExporterInitStrings.mel",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/Cali_Scale_Meters.fbxexportpreset",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/AssetPublish.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/versionFile_v02.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/fileManager_v03.py",
+		"/C/Users/zethwillie/Documents/maya/scripts/zbw_appendPath.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/userSetup.mel",
+		"/C/Users/zethwillie/Desktop/pipe/chrlx_pipe/masterWin.py",
+		"/C/Users/zethwillie/Desktop/pipe/chrlx_pipe/masterFuncs.py",
+		"/C/Users/zethwillie/Desktop/zeth/python_wip/exportFBX.py",
+		"/C/Users/zethwillie/Desktop/pipe/chrlx_pipe/shotWin.py",
+		"/C/Users/zethwillie/Desktop/zeth/python_wip/previsShaders.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/AssetPublish.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/publishSceneVersion_v01.py",
+		"/C/Users/zethwillie/Desktop/incrementNames.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/openSceneFile_v02.py",
+		"/C/Users/zethwillie/Desktop/zeth/zTools/resources/mayaDecorators.py",
+		"/C/Users/zethwillie/Desktop/pipe/chrlx_pipe/projectSetter.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/openSceneFile_v01.py",
+		"/C/Users/zethwillie/Desktop/zeth/froggerPipe/assetInfo.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/FroggerMenu.mel",
+		"/C/Users/zethwillie/Desktop/zeth/froggerPipe/assetManager.py",
+		"/C/Users/zethwillie/Desktop/zeth/froggerPipe/fileManager.py",
+		"/C/Users/zethwillie/Desktop/zeth/froggerPipe/fileUI.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/getFilePath_v01.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/versionFile_v01.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/saveSceneAsVersion_v02.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/saveSceneVersion_v02.py",
+		"/C/Users/zethwillie/Desktop/pipe/chrlx_pipe/assetWin.py",
+		"/C/Users/zethwillie/Desktop/zeth/froggerPipe/openUI.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/checkScene.py",
+		"/C/Users/zethwillie/Desktop/chrlx_pipe-master/assetFuncs.py",
+		"/C/Users/zethwillie/Desktop/asdfasdf.py",
+		"/C/Users/zethwillie/Desktop/adsfasdf"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 117.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"X:",
+			"envprojPath",
+			"envvar",
+			".1",
+			".8",
+			"AssetPublish",
+			"assetPublish",
+			"publish_fbx_folder",
+			"finish_up",
+			"pp = uf.P",
+			" pp = Pat",
+			"publish_fbx_folder",
+			"goodRefs.remove(ref)",
+			"publish_fbx_folder",
+			"state",
+			"            publishState = False\n            return()",
+			"return(False)",
+			"return(False)\n",
+			"return(False)",
+			"goodRefs.remove(ref)",
+			"goodRefs",
+			"return(False)",
+			"pp",
+			"keep",
+			"delete_other_top_level_nodes",
+			"pp",
+			"pp.",
+			"node",
+			"nodes",
+			"popen",
+			"cycleWalkA",
+			"cycleWalkA.tak",
+			"variant_dict",
+			"FBXLoadExportPresetFile",
+			"        mel.eval('FBXLoadExportPresetFile -f \"{0}\";'.format(rigPreset))\n",
+			"rigPreset",
+			"load",
+			"get_versions_list",
+			"phasePath",
+			"PathParse",
+			"pathParse",
+			"PathParse",
+			"pathParse",
+			"get_version_info",
+			"get_variants_list",
+			"nameFilter",
+			"saveVersion",
+			"gather_info",
+			"Execute",
+			"execute",
+			"fileDialog",
+			"fileDial",
+			"pp",
+			"get_existing_refs",
+			"mayapubpath",
+			"pubFbxPath",
+			"binary",
+			"pubFbxPath",
+			"pubFileName",
+			"pubFilePath",
+			"rootremove",
+			"*",
+			"rootremove",
+			"all",
+			"versionUp",
+			"word_wrap",
+			"wordwrap",
+			"word wrap",
+			"gameExp_ClipOverwriteExistingFiles",
+			"gameExp_BrowseFolder",
+			"gameExporterBrowserBtn",
+			"$gameExporterExportPath ",
+			".exportPath",
+			"changeCommand",
+			"changeCommnad",
+			"anim_gameExporterExportFilename",
+			"doExport",
+			"gameExporterExportFilename",
+			"$gameExporterExportPath",
+			"gameExp_GetPrefixedName",
+			"gameExporterExportPath",
+			".exportPath",
+			"gameExp_DoExport;",
+			"ProvideUniqueName",
+			"DoExport",
+			"gameExp_DoExport",
+			"anim_gameExporterExportBtn",
+			"button",
+			"anim*button",
+			"optionmenu",
+			"$node",
+			"Node",
+			"gameExp_ApplyPresetOnNode",
+			"$userChoice",
+			"$userChoice[0])",
+			"gameExp_CreateNodeAndApplyPreset",
+			"preset",
+			"save_as_new",
+			"saveAsBut",
+			"saveSelBut",
+			"saveAsBut",
+			"mc",
+			"publish_fbx_file",
+			"value",
+			"loadValues",
+			"confirm",
+			"geos",
+			"root",
+			"open_browser",
+			"all",
+			"True",
+			"val",
+			"assettype",
+			"assetType",
+			"val",
+			"assetPhase",
+			"assetTypeOM",
+			"variant",
+			"cancel",
+			"assetTypeOM",
+			"masterAssetWindow",
+			"mstWin",
+			"fix_",
+			", key=str.upper)",
+			"sorted(",
+			"400",
+			"gather_info",
+			"assetFilesRaw"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Utilities/utilityFunctions_v01.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8945,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								925,
+								925
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "fileManager_v06.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 18477,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								12359,
+								12359
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5885.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/zethwillie/Desktop/zeth/rigConvertToFlat.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 240,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								240,
+								240
+							]
+						],
+						"settings":
+						{
+							"auto_name": "import maya.cmds as cmds",
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 35.0
+	},
+	"input":
+	{
+		"height": 43.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			0.902955665024,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "pipeline_coding_sublime_project.sublime-project",
+	"replace":
+	{
+		"height": 66.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 348.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
