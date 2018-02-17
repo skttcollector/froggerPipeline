@@ -2,10 +2,12 @@ import maya.cmds as mc
 import maya.mel as mel
 import sys
 import setProject as sp
+import os
 
 pipelineTools=r"\\caddy\work\current\FROGGER_MAGFL-N400\Frogger\Production\Code\Maya\Tools\PipelineTools\Python"
 projectScripts=r"\\caddy\work\current\FROGGER_MAGFL-N400\Frogger\Production\Code\Maya\Scripts\Python"
 riggingTools=r"\\caddy\work\current\FROGGER_MAGFL-N400\Frogger\Production\Code\Maya\Tools\RiggingTools\Python"
+
 
 if pipelineTools not in sys.path:
     sys.path.insert(0, pipelineTools)

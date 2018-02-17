@@ -6,11 +6,7 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 import Utilities.utilityFunctions as uf
-reload(uf)
 import Utilities.projectGlobals as pg
-reload(pg)
-import setAndRunGameExporter as ge
-reload(ge)
 
 # the fbx presets
 anmPreset=pg.animFBXExport
@@ -233,7 +229,6 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
         cmds.warning("assetPublish.publish_fbx_anim_file: You haven't passed in a scene path!")
         return(False)
 
-# assuming references
     refs = cmds.file(q=True, r=True)
     if not refs:
         cmds.warning("There are no references in this scene. . .")
@@ -241,10 +236,9 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
     if len(refs) > 1:
         cmds.warning("There are too many references in this scene. . .")
         return(False)
-# below would all be under a for loop for each reference in the stages? 
     pp = uf.PathParser(origScene)
 
-# assuming a namespace
+    # assuming a namespace
     geoGrp = cmds.ls("*:GEO")
     jntGrp = cmds.ls("*:EXPORT_JNT_Grp")
 
@@ -305,8 +299,11 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
         pubFilePath = uf.fix_path(os.path.join(pubFbxPath, pubFileName))
         rootremove = "{0}:".format(namespace)
         cmds.select([root, geo], r=True)
-# do this the cmds way
-        nodes = mel.eval("gameExp_GetGameFbxExporterNodeList()")
+
+        nodes = cmds.ls(type="gameFbxExporter")
+        if not nodes:
+            cmds.warning("AssetPublish.publish_fbx_anim_files: You don't have any game exporter nodes in your scene! Aborting!")
+            return()
         cmds.select(nodes, add=True)
 
         keep = [root, geo]
@@ -329,22 +326,24 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
         pubsplits[-2] = "MB"
         mayapubpath = "/".join(pubsplits)
 
-        # just export maya scene here. . . to publish (need to get mb path)
-        # get the latest "gameExporterPreset*" for export (not sure if latest what we want?)
+# add version folder and change name . . . main_v0005 --> Fish_main.fbx
+
+        # if there's not a game export node, just export an fbx, otherwise do the game export all to one clip
         if not nodes:
-            cmds.warning("You don't have any game export nodes in your scene. Just exporting a straight fbx clip!")
+            cmds.warning("You don't have any game export nodes in your scene. Just exporting a straight fbx animation!")
             mel.eval('FBXLoadExportPresetFile -f "{0}";'.format(anmPreset))
             mel.eval('FBXExport -f "{0}" -s'.format(pubFilePath + ".fbx"))
 
         else:
             print "===== anim publish:\n- saving {0}".format(mayapubpath + ".mb")
             cmds.file(mayapubpath + ".mb", es=True, f=True, type="mayaBinary")
-            print "- opening {0}".format(mayapubpath + ".mb")
+            print "multiRefAnimExport.publish_fbx_anim_file: opening {0}".format(mayapubpath + ".mb")
             hold = cmds.file(mayapubpath + ".mb", o=True, f=True)
-            print "-formatting and exporting"
-# check that we're doing all we can here. . . .
-            # uf.set_gameExport_info(gnodes[-1], filepath, filename)        
-            ge.set_and_export(pubFilePath+".fbx")
+            # set the export parameters
+            uf.set_gameExport_info(nodes[-1], pubFbxPath, pubFileName)        
+            print "========= multiRefAnimExport.publish_fbx_anim_file: trying to publish FBX {0}/{1}".format(pubFbxPath, pubFileName + ".fbx")
+            #game export
+            mel.eval("gameExp_DoExport;")
 
     return(True)    
 
@@ -441,8 +440,6 @@ def assetPublish(versionUp=True, *args):
         fbxPub = publish_fbx_anim_file(versionUp, origScene)
         if not fbxPub:
             return()
-        print "----- freezing so you can export anim"
-        return()
 
     if versionUp:
         verNum = int(pp.path[-7:-3])
@@ -461,3 +458,8 @@ def assetPublish(versionUp=True, *args):
     else:
         print "assetPublish.assetPublish: Opening original file: ",pp.path 
         cmds.file(pp.path, open=True, force=True)
+
+    # close the game export window
+    if cmds.window("gameExporterWindow", exists=True):
+        cmds.deleteUI("gameExporterWindow")
+

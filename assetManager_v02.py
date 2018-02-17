@@ -1,17 +1,11 @@
-####
-# date: 1/15/18
-# created by: Zeth Willie, zethwillie@gmail.com
-# to run: import assetManager; assetManager.assetManager()
-####
+import os
+from functools import partial
+import fnmatch
 
 import maya.cmds as cmds
+
 import Utilities.assetInfo as ai
-reload(ai)
-from functools import partial
-import os
 import Utilities.utilityFunctions as uf
-reload(uf)
-import fnmatch
 
 # current scene info at top
 # change namespace functionality? right click

@@ -2,13 +2,17 @@ import os
 import sys
 import maya.cmds as cmds
 import Utilities.utilityFunctions as uf
-reload(uf)
 
-# this is for the project as a whole to gather info on folders and files
+# this is for the project as a whole to gather info on folders and files, fix paths, etc
 
 class AssetInfo(object):
     def __init__(self):
-        self.basePath = "X:/Production/"
+        if "MAYA_PROJECT_PATH" in os.environ:
+            self.basePath = os.environ["MAYA_PROJECT_PATH"]
+        else: 
+            # self.basePath = "X:/Production"
+            cmds.error("assetInfo.__init__: couldn't find the MAYA_PROJECT_PATH environment variable. See a TD!")
+
         self.charPath = uf.fix_path(os.path.join(self.basePath, "Assets/3D/Character/"))
         self.propPath = uf.fix_path(os.path.join(self.basePath, "Assets/3D/Props/"))
         self.setPath = uf.fix_path(os.path.join(self.basePath, "Assets/3D/Sets/"))
@@ -55,7 +59,7 @@ class AssetInfo(object):
         Args:
             assetpath (string) - the path to the top level of the asset folder ("X://.../Production/Assets/3D/Character/Fish")
         """
-        exclude = ["0.txt", "edits", "incremental"]
+        exclude = ["0.txt", "edits", "incremental", "_old"]
         self.anmPath = uf.fix_path(os.path.join(assetpath, "Animation/Work/Maya/scenes"))
         self.lgtPath = uf.fix_path(os.path.join(assetpath, "Lighting/Work/Maya/scenes"))
         self.mdlPath = uf.fix_path(os.path.join(assetpath, "Modeling/Work/Maya/scenes"))

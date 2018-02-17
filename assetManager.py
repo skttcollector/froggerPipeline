@@ -4,10 +4,8 @@ from functools import partial
 
 import maya.cmds as cmds
 
-import Utilities.assetInfo_v01 as ai
-reload(ai)
+import Utilities.assetInfo as ai
 import Utilities.utilityFunctions as uf
-reload(uf)
 
 # TODO 
 # current scene info at top

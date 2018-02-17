@@ -1,7 +1,10 @@
+import os
+
 import maya.cmds as cmds
 import maya.mel as mel
+
 import Utilities.utilityFunctions as uf
-import os
+
 
 def set_and_export(filepath):
 

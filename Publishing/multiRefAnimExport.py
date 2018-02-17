@@ -7,11 +7,7 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 import Utilities.utilityFunctions as uf
-reload(uf)
 import Utilities.projectGlobals as pg
-reload(pg)
-import setAndRunGameExporter as ge
-reload(ge)
 
 # the fbx presets
 anmPreset=pg.animFBXExport

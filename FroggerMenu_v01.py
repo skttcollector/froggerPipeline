@@ -1,31 +1,40 @@
+# maya imports
 import maya.cmds as mc
 import maya.mel as mel
 
-#import utility fuctions
-import Utilities.projectGlobals as pg
-
+# python imports
 from functools import partial
 import os 
 
-import openSceneFile_v02 as osf
-import saveSceneVersion_v02 as ssv
-import saveSceneAsVersion_v02 as sav
-import fileManager_v06 as fileMgr
+# initialize the maya env variables
+os.environ["MAYA_PROJECT_PATH"] = "X:/Production"
+os.environ["MAYA_CURRENT_PROJECT"] = "OutOfBoxExperience"
+
+# Pipeline imports
+import openSceneFile as osf
+import saveSceneVersion as ssv
+import saveSceneAsVersion as sav
+import fileManager as fileMgr
 import assetManager as assMgr
-import Publishing.AssetPublish_v06 as assPub
-import updateAllReferences as upd
-import Publishing.multiRefAnimExport_v07 as mre
 import setProject as sp
 
+# Publishing imports
+import Publishing.AssetPublish as assPub
+import Publishing.multiRefAnimExport as mre
+import updateAllReferences as upd
+
+#Utility imoports
+import Utilities.projectGlobals as pg
+
 #import anim tools
-import Publishing.zbRigExport as zbre
-import Publishing.zbRigExport_Cm as zbre_cm
-import Publishing.zbRigExport_Meters as zbre_meters
-import Publishing.zbRigExport_singleFrame as zbresf
 import Anim.zb_spaceMatching as zbsm
 
 #import rigging tools
 import importTemplate_v01 as it
+
+imps = [osf, ssv, sav, fileMgr, assMgr, sp, assPub, mre, upd, pg, zbsm, it]
+for i in imps:
+    reload(i)
 
 #set UI version
 global uiVersion
@@ -124,26 +133,6 @@ def updateRefs(*args):
     upd.update_all_references()
 
 #ANIM MENU ITEMS#=================================================================
-def exportAnimFBX(*args, **kwargs):
-    reload(zbre)
-    export=zbre.rigExport()
-    export.run()
-
-def exportAnimFBX_Cm(*args, **kwargs):
-    reload(zbre_cm)
-    export=zbre_cm.rigExport()
-    export.run()
-
-def exportAnimFBX_Meters(*args, **kwargs):
-    reload(zbre_meters)
-    export=zbre_meters.rigExport()
-    export.run()
-
-def exportPoseFBX(*args, **kwargs):
-    reload(zbresf)
-    exportsf=zbresf.rigExport()
-    exportsf.run()
-
 def spaceMatching(*args, **kwargs):
     reload(zbsm)
     zbsm.uiWindow()

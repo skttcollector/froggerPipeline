@@ -2,9 +2,9 @@
 import maya.cmds as mc
 import os
 
-import Utilities.versionFile_v02 as vf
-reload(vf)
-ver=vf.versionClass()
+import Utilities.versionFile as vf
+
+ver = vf.versionClass()
 
 def run(*args, **kwargs):
     filePath=mc.file(q=1, l=1)[0]

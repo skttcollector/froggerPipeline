@@ -5,24 +5,16 @@ from functools import partial
 
 import maya.cmds as cmds
 
-import Utilities.assetInfo_v01 as ai
-reload(ai)
-import Utilities.versionFile_v02 as vf
-reload(vf)
-import openSceneFile_v02 as of
-reload(of)
-import Utilities.utilityFunctions_v01 as uf
-reload(uf)
+import Utilities.assetInfo as ai
+import Utilities.versionFile as vf
+import openSceneFile as of
+import Utilities.utilityFunctions as uf
 import saveNewWindows as snw
-reload(snw)
-import setProject as sp
-reload(sp)
+
 
 # TODO
 # image?
 # find a way to consolidate project names, env variables, etc to populate the list here and in project setter, etc  
-
-# TURN THIS VERSION INTO A CLASS? Will this allow us to back up and rerun load asset info? Should do, cuz then we can reset the ai.AssetInfo() 
 
 proj = ai.AssetInfo()
 widgets = {}
@@ -45,9 +37,7 @@ def file_UI_create(*args):
     cmds.setParent(widgets["win"])
     widgets["mainCLO"] = cmds.columnLayout(w=w, h=h)
     widgets["mainFLO"] = cmds.formLayout(w=w, h=h, bgc=(.2,.2,.2))
-    widgets["projOM"] = cmds.optionMenu(l="PROJECT:", changeCommand=change_project)
-    cmds.menuItem(label="Frogger")
-    cmds.menuItem(label="FitAndSetup")
+    widgets["projText"] = cmds.text("PROJECT: {0}".format(os.environ["MAYA_CURRENT_PROJECT"]))
     aw = 220
     widgets["assetsFLO"] = cmds.formLayout(w=aw, h=430)
     widgets["assetsTab"] = cmds.tabLayout(w=aw,h=430, cc=change_stage_tab)
@@ -90,7 +80,7 @@ def file_UI_create(*args):
 
 
     cmds.formLayout(widgets["mainFLO"], e=True, af = [
-        (widgets["projOM"], "top", 5), (widgets["projOM"], "left", 5),
+        (widgets["projText"], "top", 5), (widgets["projText"], "left", 5),
         (widgets["assetsFLO"], "top", 25), (widgets["assetsFLO"], "left", 5),
         (widgets["filesFLO"], "top", 35), (widgets["filesFLO"], "left", 240),
         (widgets["openBut"], "top", 60),(widgets["openBut"], "left", 600),
@@ -104,40 +94,7 @@ def file_UI_create(*args):
     cmds.window(widgets["win"], e=True, w=5, h=5, rtf=True)
     cmds.showWindow(widgets["win"])
 
-    set_project()
     load_asset_info("first")
-
-
-def change_project(*args):
-    project = cmds.optionMenu(widgets["projOM"], q=True, value=True)
-    if project == "Frogger":
-        currProj = "Frogger"
-        projPath = "X:/Production"
-    if project == "FitAndSetup":
-        currProj = "FitAndSetup"
-        projPath = "Y:/Production"
-
-    os.environ["MAYA_CURRENT_PROJECT"] = currProj
-    os.environ["MAYA_PROJECT_PATH"] = projPath
-
-    cmds.warning("Set current project (MAYA_CURRENT_PROJECT env var) to {0}\nSet current project path (MAYA_PROJECT_PATH env var) to {1} ".format(currProj, projPath))    
-
-    set_project()
-    
-    # try to reset the current variables
-    proj = ai.AssetInfo()
-    
-    # load_asset_info("first")
-
-
-def set_project(*args):
-    if "MAYA_CURRENT_PROJECT" in os.environ:
-        ev = os.environ["MAYA_CURRENT_PROJECT"]
-        if ev == "Frogger" or ev=="FitAndSetup":
-            cmds.optionMenu(widgets["projOM"], e=True, value=ev)
-    else:
-        cmds.optionMenu(widgets["projOM"], e=True, value="Frogger")
-        cmds.error("fileManager.set_project: There was an issue! I can't find 'MAYA_CURRENT_PROJECT' in your environment variables!")
 
 
 def save_layout(*args):
@@ -524,11 +481,11 @@ def save_as_new(selectionBased=False, *args):
             asset = cmds.textScrollList(widgets["stageTSL"], q=True, si=True)[0]
 
         filename = "{0}_main_{1}_Work_v0001.mb".format(asset, phase)
-        filePath = uf.fix_path(os.path.join(assetPath, filename))
+        filePath = fix_path(os.path.join(assetPath, filename))
 
     # or use the path from selections
     else:
-        filePath = uf.fix_path(os.path.join(assetPath, assetFiles[selIndex - 1]))
+        filePath = fix_path(os.path.join(assetPath, assetFiles[selIndex - 1]))
 
     savenewdata = snw.SaveNewAssetUI(filePath, selectionBased)
 
@@ -548,6 +505,11 @@ def save_as_new(selectionBased=False, *args):
     #     ver.versionUp(filePath)
 
     # populate_files()
+
+
+def fix_path(path, *args):
+    newPath = path.replace("\\", "/")
+    return(newPath)
 
 
 def fileManager(*args):

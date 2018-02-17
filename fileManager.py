@@ -5,24 +5,20 @@ from functools import partial
 
 import maya.cmds as cmds
 
-import Utilities.assetInfo_v01 as ai
-reload(ai)
-import Utilities.versionFile_v02 as vf
-reload(vf)
-import openSceneFile_v02 as of
-reload(of)
-import Utilities.utilityFunctions_v01 as uf
-reload(uf)
+import Utilities.assetInfo as ai
+import Utilities.versionFile as vf
+import openSceneFile as of
+import Utilities.utilityFunctions as uf
 import saveNewWindows as snw
-reload(snw)
+import setProject as sp
 
 # TODO
 # image?
 # find a way to consolidate project names, env variables, etc to populate the list here and in project setter, etc  
 
-print "ldkjsf;ldkjsf;laskfj;laskfj"
+# TURN THIS VERSION INTO A CLASS? Will this allow us to back up and rerun load asset info? Should do, cuz then we can reset the ai.AssetInfo() 
 
-proj = ai.AssetInfo()
+
 widgets = {}
 
 def file_UI_create(*args):
@@ -43,7 +39,9 @@ def file_UI_create(*args):
     cmds.setParent(widgets["win"])
     widgets["mainCLO"] = cmds.columnLayout(w=w, h=h)
     widgets["mainFLO"] = cmds.formLayout(w=w, h=h, bgc=(.2,.2,.2))
-    widgets["projText"] = cmds.text("PROJECT: {0}".format(os.environ["MAYA_CURRENT_PROJECT"]))
+    widgets["projOM"] = cmds.optionMenu(l="PROJECT:", changeCommand=change_project)
+    cmds.menuItem(label="OutOfBoxExperience")
+    cmds.menuItem(label="FitAndSetup")
     aw = 220
     widgets["assetsFLO"] = cmds.formLayout(w=aw, h=430)
     widgets["assetsTab"] = cmds.tabLayout(w=aw,h=430, cc=change_stage_tab)
@@ -86,7 +84,7 @@ def file_UI_create(*args):
 
 
     cmds.formLayout(widgets["mainFLO"], e=True, af = [
-        (widgets["projText"], "top", 5), (widgets["projText"], "left", 5),
+        (widgets["projOM"], "top", 5), (widgets["projOM"], "left", 5),
         (widgets["assetsFLO"], "top", 25), (widgets["assetsFLO"], "left", 5),
         (widgets["filesFLO"], "top", 35), (widgets["filesFLO"], "left", 240),
         (widgets["openBut"], "top", 60),(widgets["openBut"], "left", 600),
@@ -100,8 +98,42 @@ def file_UI_create(*args):
     cmds.window(widgets["win"], e=True, w=5, h=5, rtf=True)
     cmds.showWindow(widgets["win"])
 
+    set_project()
     load_asset_info("first")
 
+
+def change_project(*args):
+    project = cmds.optionMenu(widgets["projOM"], q=True, value=True)
+    if project == "OutOfBoxExperience":
+        currProj = "OutOfBoxExperience"
+        projPath = "X:/Production"
+    if project == "FitAndSetup":
+        currProj = "FitAndSetup"
+        projPath = "Y:/Production"
+
+    os.environ["MAYA_CURRENT_PROJECT"] = currProj
+    os.environ["MAYA_PROJECT_PATH"] = projPath
+
+    cmds.warning("Set current project (MAYA_CURRENT_PROJECT env var) to {0}\nSet current project path (MAYA_PROJECT_PATH env var) to {1} ".format(currProj, projPath))    
+
+    set_project()
+    
+
+def set_project(*args):
+    """
+    gets the current project in the maya environment variables and sets it to the option menu
+    RETURNS:
+        string - the value for the MAYA_CURRENT_PROJECT env variable ("OutOfBoxExperience or ")
+    """
+    if "MAYA_CURRENT_PROJECT" in os.environ:
+        ev = os.environ["MAYA_CURRENT_PROJECT"]
+        if ev == "OutOfBoxExperience" or ev=="FitAndSetup":
+            cmds.optionMenu(widgets["projOM"], e=True, value=ev)
+    else:
+        cmds.optionMenu(widgets["projOM"], e=True, value="OutOfBoxExperience")
+        cmds.error("fileManager.set_project: There was an issue! I can't find 'MAYA_CURRENT_PROJECT' in your environment variables!")
+    
+    load_asset_info("first")
 
 def save_layout(*args):
     """
@@ -150,6 +182,8 @@ def delete_layout(*args):
 def load_asset_info(counter=None, *args):
     """
     gets the info for the assets in the project
+    ARGS:
+        counter (string) 
     """
     clear_asset_lists()
 
@@ -157,21 +191,25 @@ def load_asset_info(counter=None, *args):
     assetNames = proj.get_asset_name_list()
 
     for asset in assetNames[0]:
-        cmds.textScrollList(widgets["charTSL"], e=True, a=asset, sc=populate_files)
+        cmds.textScrollList(widgets["charTSL"], e=True, a=asset, sc=partial(populate_files, proj))
     for asset in assetNames[1]:
-        cmds.textScrollList(widgets["propTSL"], e=True, a=asset, sc=populate_files)
+        cmds.textScrollList(widgets["propTSL"], e=True, a=asset, sc=partial(populate_files, proj))
     for asset in assetNames[2]:
-        cmds.textScrollList(widgets["setTSL"], e=True, a=asset, sc=populate_files)
+        cmds.textScrollList(widgets["setTSL"], e=True, a=asset, sc=partial(populate_files,proj))
     for asset in assetNames[3]:
-        cmds.textScrollList(widgets["stageTSL"], e=True, a=asset, sc=populate_files)
+        cmds.textScrollList(widgets["stageTSL"], e=True, a=asset, sc=partial(populate_files, proj))
 
-    select_initial(counter)
+    select_initial(proj, counter)
 
 
-def select_initial(counter, *args):
+def select_initial(proj, counter, *args):
     """
     tries to select the first item in chars, if not, then props, etc. If no item, pass
     !! finish this later
+    
+    ARGS:
+        proj (AssetInfo object)
+        counter (string) 
     """
 
     # if we're in a scene with a name
@@ -197,8 +235,8 @@ def select_initial(counter, *args):
         else:
             cmds.textScrollList(widgets["charTSL"], e=True, sii=1)
     else:
+        cmds.tabLayout(widgets["assetsTab"], e=True, st="CHARS")
         cmds.textScrollList(widgets["charTSL"], e=True, sii=1)
-
     if counter:
         load = load_layout()
         if load:
@@ -206,7 +244,7 @@ def select_initial(counter, *args):
 
     counter = None
 
-    populate_files()
+    populate_files(proj)
 
 
 def clear_asset_lists(*args):
@@ -230,6 +268,8 @@ def change_stage_tab(*args):
     """
     when tab changes, just select first in the list
     """
+    proj = ai.AssetInfo()
+
     currTab = cmds.tabLayout(widgets["assetsTab"], q=True, st=True)
     currScene = cmds.file(q=True, sn=True)
     if currTab == "CHARS":
@@ -258,22 +298,25 @@ def change_stage_tab(*args):
     else:
         cmds.textScrollList(widgets["{0}TSL".format(tsl)], e=True, sii=1)
 
-    populate_files()
+    populate_files(proj)
 
 
-def populate_files(*args):
+def populate_files(proj, *args):
     """
     clears the file list, then populates based on the phase and the selected asset in the asset TSL
     """
+    proj = ai.AssetInfo()
+
     clear_file_list()
+
     selTab = cmds.tabLayout(widgets["assetsTab"], q=True, st=True)
 
     tab, phase, assetPath, assetFiles = [None, None, None, None]
 
     if selTab != "STGS":
-        tab, phase, assetPath, assetFiles = get_asset_info()
+        tab, phase, assetPath, assetFiles = get_asset_info(proj)
     else:
-        tab, phase, assetPath, assetFiles = get_stage_info()
+        tab, phase, assetPath, assetFiles = get_stage_info(proj)
 
     if assetFiles:
         for file in assetFiles:
@@ -315,9 +358,9 @@ def get_path_explorer(*args):
     
     phase = cmds.optionMenu(widgets["phaseOM"], q=True, value=True)
     asset = cmds.textScrollList(widgets["{0}TSL".format(tsl)], q=True, si=True)[0]
-    base = "X:/Production"
+    base = os.environ["MAYA_PROJECT_PATH"]
     if currTab != "STGS":
-        path = "{0}/Assets/3D/{1}/{2}/{3}/Work/Maya/scenes/".format(base, assType, asset, phase, )
+        path = "{0}/Assets/3D/{1}/{2}/{3}/Work/Maya/scenes/".format(base, assType, asset, phase)
     else:
         path = "{0}/Stages/{1}/{2}/Production/Maya/scenes/".format(base, asset, phase )
 
@@ -339,17 +382,19 @@ def open_explorer(path, *args):
             pass
 
 
-def get_asset_info(*args):
+def get_asset_info(proj, *args):
     """
     gets info from state of the ui
+    ARGS: 
+        proj (AssetInfo object) - the info for the current set project
     Returns:
         tab (string) - which tab is selected ("CHARS", "SETS", "PROPS")
         phase (string) - which phase we're in ("Modeling", "Rigging", etc)
         assetPath (string) - the path to the asset folder ("x://.../Assets/Character/Fish") based on above
         assetFiles (list) - list of asset file paths based on above
     """
+    proj = ai.AssetInfo()
 
-# here i need to check if our current asset is even in the project we're in (might have switched)    
     asset = None
     assetFiles = None
     tab = cmds.tabLayout(widgets["assetsTab"], q=True, st=True)
@@ -385,9 +430,11 @@ def get_asset_info(*args):
     return(tab, phase, assetPath, assetFiles)
 
 
-def get_stage_info(*args):
+def get_stage_info(proj, *args):
     """
     gets info from state of the ui
+    ARGS:
+        proj (AssetInfo object) - the info for the current project files
     Returns:
         tab (string) - which tab is selected ("CHARS", "SETS", "PROPS", "STGS")
         phase (string) - which phase we're in ("Modeling", "Rigging", etc)
@@ -400,7 +447,6 @@ def get_stage_info(*args):
     if not assetR:
         assetR = cmds.textScrollList(widgets["stageTSL"], q=True, sii=0)
     asset = assetR[0]
-    print asset
     assetPath = os.path.join(proj.stagePath, asset)  
     tab = "STGS"
     phase = "Animation"
@@ -411,7 +457,7 @@ def get_stage_info(*args):
     return(tab, phase, assetPath, assetFiles)    
 
 
-def open_selected(*args):
+def open_selected(proj, *args):
     # if no file then warn and skip
     selFile = cmds.textScrollList(widgets["filesTSL"], q=True, si=True)[0]
     if selFile == "No Files":
@@ -422,9 +468,9 @@ def open_selected(*args):
     tab, phase, assetPath, assetFiles = [None, None, None, None]
     selTab = cmds.tabLayout(widgets["assetsTab"], q=True, st=True)
     if selTab != "STGS":
-        tab, phase, assetPath, assetFiles = get_asset_info()
+        tab, phase, assetPath, assetFiles = get_asset_info(proj)
     else:
-        tab, phase, assetPath, assetFiles = get_stage_info()
+        tab, phase, assetPath, assetFiles = get_stage_info(proj)
     selIndex = cmds.textScrollList(widgets["filesTSL"], q=True, sii=True)[0]
     filePath = os.path.join(assetPath, assetFiles[selIndex - 1])
 
@@ -454,6 +500,7 @@ def version_up(*args):
     """
     versions the current file based on Zed's class/modules
     """
+
     filePath = cmds.file(q=True, sn=True)
     ver = vf.versionClass()
     ver.versionUp(filePath)
@@ -463,13 +510,15 @@ def version_up(*args):
 
 def save_as_new(selectionBased=False, *args):
 
+    proj = ai.AssetInfo()
+
     # construct the paths
     filePath = None
     selTab = cmds.tabLayout(widgets["assetsTab"], q=True, st=True)
     if selTab != "STGS":
-        tab, phase, assetPath, assetFiles = get_asset_info()
+        tab, phase, assetPath, assetFiles = get_asset_info(proj)
     else:
-        tab, phase, assetPath, assetFiles = get_stage_info()
+        tab, phase, assetPath, assetFiles = get_stage_info(proj)
 
     selItem = None
     if cmds.textScrollList(widgets["filesTSL"], q=True, sii=True):
@@ -487,11 +536,11 @@ def save_as_new(selectionBased=False, *args):
             asset = cmds.textScrollList(widgets["stageTSL"], q=True, si=True)[0]
 
         filename = "{0}_main_{1}_Work_v0001.mb".format(asset, phase)
-        filePath = fix_path(os.path.join(assetPath, filename))
+        filePath = uf.fix_path(os.path.join(assetPath, filename))
 
     # or use the path from selections
     else:
-        filePath = fix_path(os.path.join(assetPath, assetFiles[selIndex - 1]))
+        filePath = uf.fix_path(os.path.join(assetPath, assetFiles[selIndex - 1]))
 
     savenewdata = snw.SaveNewAssetUI(filePath, selectionBased)
 
@@ -511,11 +560,6 @@ def save_as_new(selectionBased=False, *args):
     #     ver.versionUp(filePath)
 
     # populate_files()
-
-
-def fix_path(path, *args):
-    newPath = path.replace("\\", "/")
-    return(newPath)
 
 
 def fileManager(*args):

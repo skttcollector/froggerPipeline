@@ -552,16 +552,23 @@
 	},
 	"expanded_folders":
 	[
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline",
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Utilities"
 	],
 	"file_history":
 	[
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/fileManager_v06.py",
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/fileManager_v07.py",
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Publishing/setAndRunGameExporter.py",
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Publishing/publishOutGameExportFiles.py",
+		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/assetInfo_v01.py",
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/assetManager.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/utilityFunctions_v01.py",
 		"/C/Users/zethwillie/Desktop/zeth/rigConvertToFlat.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/fileManager_v07.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/assetInfo_v02.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/assetInfo.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/setProject.py",
-		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/assetInfo_v01.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/FroggerMenu_v01.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/AssetPublish_v06.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/FroggerMenu_v02.py",

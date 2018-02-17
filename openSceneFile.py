@@ -3,9 +3,7 @@ import maya.cmds as mc
 import maya.mel as mel
 import os
 import Utilities.utilityFunctions as uf
-reload(uf)
 import Utilities.projectGlobals as pg
-reload(pg)
 
 #main execution fuction
 def run(path=None, *args, **kwargs):

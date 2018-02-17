@@ -5,17 +5,14 @@ import fnmatch
 import maya.cmds as cmds
 import maya.mel as mel
 
-import Utilities.utilityFunctions_v01 as uf
-reload(uf)
+import Utilities.utilityFunctions as uf
 import Utilities.projectGlobals as pg
-reload(pg)
-import setAndRunGameExporter as ge
-reload(ge)
+
 
 # the fbx presets
 anmPreset=pg.animFBXExport
 rigPreset=pg.rigFBXExport
-modelPreset=pg.modelFBXExport
+modelPreset = pg.modelFBXExport
 
 def publish_maya_scene(versionUp=True, origScene=None, *args):
     """
@@ -233,6 +230,7 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
         cmds.warning("assetPublish.publish_fbx_anim_file: You haven't passed in a scene path!")
         return(False)
 
+# assuming references
     refs = cmds.file(q=True, r=True)
     if not refs:
         cmds.warning("There are no references in this scene. . .")
@@ -240,9 +238,10 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
     if len(refs) > 1:
         cmds.warning("There are too many references in this scene. . .")
         return(False)
+# below would all be under a for loop for each reference in the stages? 
     pp = uf.PathParser(origScene)
 
-    # assuming a namespace
+# assuming a namespace
     geoGrp = cmds.ls("*:GEO")
     jntGrp = cmds.ls("*:EXPORT_JNT_Grp")
 
@@ -269,14 +268,10 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
 
     cmds.file(refs[0], ir=True)
 
-    pubFbxPath = uf.fix_path(os.path.join(pp.phasePath, "Publish/FBX/{0}_v{1}".format(pp.variant, pp.versionString)))
-    print pubFbxPath
-
-    if not os.path.isdir(pubFbxPath):
-        os.makedirs(pubFbxPath)
-
-    tokens = pp.fileName.split("_")[:3]
-    pubFileName = "_".join(tokens) + ".fbx"
+    pubFbxPath = uf.fix_path(os.path.join(pp.phasePath, "Publish/FBX/"))
+    tokens = pp.fileName.split("_")
+    tokens[-2] = "Publish"
+    pubFileName = "_".join(tokens)[:-3] + ".fbx"
     pubFilePath = uf.fix_path(os.path.join(pubFbxPath, pubFileName))
 
     start, end = uf.get_frame_range()
@@ -302,16 +297,13 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
         geo = "{0}_Geo_Grp".format(basename)
         root = "{0}_Root_Jnt".format(basename)
         cmds.parent([geo, root], w=True)
-        tokens[-1] = basename
-        pubFileName = "_".join(tokens)
+        tokens[-2] = basename
+        pubFileName = "_".join(tokens)[:-3]
         pubFilePath = uf.fix_path(os.path.join(pubFbxPath, pubFileName))
         rootremove = "{0}:".format(namespace)
         cmds.select([root, geo], r=True)
-
-        nodes = cmds.ls(type="gameFbxExporter")
-        if not nodes:
-            cmds.warning("AssetPublish.publish_fbx_anim_files: You don't have any game exporter nodes in your scene! Aborting!")
-            return()
+# do this the cmds way
+        nodes = mel.eval("gameExp_GetGameFbxExporterNodeList()")
         cmds.select(nodes, add=True)
 
         keep = [root, geo]
@@ -331,25 +323,25 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
 
         # get path for maya publish
         pubsplits = pubFilePath.split("/")
-        pubsplits[-3] = "MB"
+        pubsplits[-2] = "MB"
         mayapubpath = "/".join(pubsplits)
 
-        # if there's not a game export node, just export an fbx, otherwise do the game export all to one clip
+        # just export maya scene here. . . to publish (need to get mb path)
+        # get the latest "gameExporterPreset*" for export (not sure if latest what we want?)
         if not nodes:
-            cmds.warning("You don't have any game export nodes in your scene. Just exporting a straight fbx animation!")
+            cmds.warning("You don't have any game export nodes in your scene. Just exporting a straight fbx clip!")
             mel.eval('FBXLoadExportPresetFile -f "{0}";'.format(anmPreset))
             mel.eval('FBXExport -f "{0}" -s'.format(pubFilePath + ".fbx"))
 
         else:
             print "===== anim publish:\n- saving {0}".format(mayapubpath + ".mb")
             cmds.file(mayapubpath + ".mb", es=True, f=True, type="mayaBinary")
-            print "multiRefAnimExport.publish_fbx_anim_file: opening {0}".format(mayapubpath + ".mb")
+            print "- opening {0}".format(mayapubpath + ".mb")
             hold = cmds.file(mayapubpath + ".mb", o=True, f=True)
-            # set the export parameters
-            uf.set_gameExport_info(nodes[-1], pubFbxPath, pubFileName)        
-            print "========= multiRefAnimExport.publish_fbx_anim_file: trying to publish FBX {0}/{1}".format(pubFbxPath, pubFileName + ".fbx")
-            #game export
-            mel.eval("gameExp_DoExport;")
+            print "-formatting and exporting"
+# check that we're doing all we can here. . . .
+            # uf.set_gameExport_info(gnodes[-1], filepath, filename)        
+            ge.set_and_export(pubFilePath+".fbx")
 
     return(True)    
 
@@ -411,12 +403,11 @@ def assetPublish(versionUp=True, *args):
         versionUp (bool): whether to version up the work file on publish
     """
     origScene = cmds.file(q=True, sn=True)
-    print "-------ORIG SCENE line 414", origScene
     pp = uf.PathParser(origScene)
 
     # bail if current scene is not compatible
     if not pp.compatible:
-        cmds.warning("assetPublish.assetPublish: You're not in a project compatible scene! Sorry. See a TD")
+        cmds.warning("assetPublish.publish_maya_scene: You're not in a project compatible scene! Sorry. See a TD")
         return()
    
     # if it's not a stage file or a publish file and it's either modeling or rigging phase
@@ -447,6 +438,8 @@ def assetPublish(versionUp=True, *args):
         fbxPub = publish_fbx_anim_file(versionUp, origScene)
         if not fbxPub:
             return()
+        print "----- freezing so you can export anim"
+        return()
 
     if versionUp:
         verNum = int(pp.path[-7:-3])
@@ -465,8 +458,3 @@ def assetPublish(versionUp=True, *args):
     else:
         print "assetPublish.assetPublish: Opening original file: ",pp.path 
         cmds.file(pp.path, open=True, force=True)
-
-    # close the game export window
-    if cmds.window("gameExporterWindow", exists=True):
-        cmds.deleteUI("gameExporterWindow")
-

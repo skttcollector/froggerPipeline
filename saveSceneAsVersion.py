@@ -5,10 +5,9 @@ import os
 import maya.cmds as mc
 import os
 
-import Utilities.versionFile_v02 as vf
-import Utilities.getFilePath_v01 as gfp
-reload(vf)
-reload(gfp)
+import Utilities.versionFile as vf
+import Utilities.getFilePath as gfp
+
 ver=vf.versionClass()
 
 def run(*args, **kwargs):

@@ -6,16 +6,12 @@ import maya.cmds as cmds
 import maya.mel as mel
 
 import Utilities.utilityFunctions as uf
-reload(uf)
 import Utilities.projectGlobals as pg
-reload(pg)
-import setAndRunGameExporter as ge
-reload(ge)
 
 # the fbx presets
 anmPreset=pg.animFBXExport
 rigPreset=pg.rigFBXExport
-modelPreset = pg.modelFBXExport
+modelPreset=pg.modelFBXExport
 
 def publish_maya_scene(versionUp=True, origScene=None, *args):
     """
@@ -269,10 +265,14 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
 
     cmds.file(refs[0], ir=True)
 
-    pubFbxPath = uf.fix_path(os.path.join(pp.phasePath, "Publish/FBX/"))
-    tokens = pp.fileName.split("_")
-    tokens[-2] = "Publish"
-    pubFileName = "_".join(tokens)[:-3] + ".fbx"
+    pubFbxPath = uf.fix_path(os.path.join(pp.phasePath, "Publish/FBX/{0}_v{1}".format(pp.variant, pp.versionString)))
+    print pubFbxPath
+
+    if not os.path.isdir(pubFbxPath):
+        os.makedirs(pubFbxPath)
+
+    tokens = pp.fileName.split("_")[:3]
+    pubFileName = "_".join(tokens) + ".fbx"
     pubFilePath = uf.fix_path(os.path.join(pubFbxPath, pubFileName))
 
     start, end = uf.get_frame_range()
@@ -298,8 +298,8 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
         geo = "{0}_Geo_Grp".format(basename)
         root = "{0}_Root_Jnt".format(basename)
         cmds.parent([geo, root], w=True)
-        tokens[-2] = basename
-        pubFileName = "_".join(tokens)[:-3]
+        tokens[-1] = basename
+        pubFileName = "_".join(tokens)
         pubFilePath = uf.fix_path(os.path.join(pubFbxPath, pubFileName))
         rootremove = "{0}:".format(namespace)
         cmds.select([root, geo], r=True)
@@ -327,10 +327,8 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
 
         # get path for maya publish
         pubsplits = pubFilePath.split("/")
-        pubsplits[-2] = "MB"
+        pubsplits[-3] = "MB"
         mayapubpath = "/".join(pubsplits)
-
-# add version folder and change name . . . main_v0005 --> Fish_main.fbx
 
         # if there's not a game export node, just export an fbx, otherwise do the game export all to one clip
         if not nodes:
@@ -409,11 +407,12 @@ def assetPublish(versionUp=True, *args):
         versionUp (bool): whether to version up the work file on publish
     """
     origScene = cmds.file(q=True, sn=True)
+    print "-------ORIG SCENE line 414", origScene
     pp = uf.PathParser(origScene)
 
     # bail if current scene is not compatible
     if not pp.compatible:
-        cmds.warning("assetPublish.publish_maya_scene: You're not in a project compatible scene! Sorry. See a TD")
+        cmds.warning("assetPublish.assetPublish: You're not in a project compatible scene! Sorry. See a TD")
         return()
    
     # if it's not a stage file or a publish file and it's either modeling or rigging phase

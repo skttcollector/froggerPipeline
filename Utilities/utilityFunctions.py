@@ -1,9 +1,9 @@
 import os
-import Utilities.projectGlobals as pg
-reload(pg)
 import re
 import maya.cmds as cmds
 import fnmatch
+
+import Utilities.projectGlobals as pg
 
 # relevant environment variables set by "setProject" script: MAYA_CURRENT_PROJECT, MAYA_PROJECT_PATH
 
@@ -13,18 +13,18 @@ def fix_path(path):
     Args:
         path (string) - the path to fix
     Returns:
-        newPath (string) - the fixed path
+        string - the fixed path
     """
     newPath = path.replace("\\", "/")
     return(newPath)
 
 
-def get_assetpath_from_filepath(filePath, *args):
-    pass
-
-
 class PathParser(object):
-    # this is for a specific file path to extract info about the file and it's related stuff
+    """
+    this is for a specific file path to extract info about the file and it's related stuff
+    ARGS:
+        path (string) - the file path to a specific file in the pipeline
+    """
     def __init__(self, path):
 
         self.path = fix_path(path) # ex. X:/Production/Assets/3D/Character/Fish/Rigging/Publish/MB/Fish_main_Rigging_Publish_v0005.mb
@@ -125,7 +125,7 @@ class PathParser(object):
         """
         checks if the path is in the format we need... 
         """
-        projectPath = "X:/Production" #os.environ["MAYA_PROJECT_PATH"]
+        projectPath = os.environ["MAYA_PROJECT_PATH"] #os.environ["MAYA_PROJECT_PATH"]
         # for now check that it's on the the x drive, in Production
         regex = r"\b(?:[a-z]+_){4}v\d{4}\.mb\b"
         test_str = path
@@ -220,3 +220,4 @@ def set_gameExport_info(gameExpNode, filepath, filename, *args):
     cmds.setAttr("{0}.bakeAnimation".format(gameExpNode), 0) # don't bake anim
     cmds.setAttr("{0}.exportSetIndex".format(gameExpNode), 1) # export all
     cmds.setAttr("{0}.inputConnections".format(gameExpNode), 0) # no input connections
+    cmds.setAttr("{0}.fileType".format(gameExpNode), 0) # set to binary

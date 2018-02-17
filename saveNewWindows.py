@@ -2,15 +2,9 @@ import os
 
 import maya.cmds as cmds
 
-import Utilities.assetInfo_v01 as ai
-reload(ai)
-import Utilities.utilityFunctions_v01 as uf
-reload(uf)
-import Utilities.versionFile_v02 as vf
-reload(vf)
-
-
-# 
+import Utilities.assetInfo as ai
+import Utilities.utilityFunctions as uf
+import Utilities.versionFile as vf
 
 #callback dismiss function to get the values of the stuff inside
 class SaveNewAssetUI(object):
