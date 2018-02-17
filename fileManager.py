@@ -16,9 +16,6 @@ import setProject as sp
 # image?
 # find a way to consolidate project names, env variables, etc to populate the list here and in project setter, etc  
 
-# TURN THIS VERSION INTO A CLASS? Will this allow us to back up and rerun load asset info? Should do, cuz then we can reset the ai.AssetInfo() 
-
-
 widgets = {}
 
 def file_UI_create(*args):
@@ -233,7 +230,17 @@ def select_initial(proj, counter, *args):
             cmds.optionMenu(widgets["phaseOM"], e=True, value=fileObj.phase)  
             cmds.textScrollList(widgets[assTab], e=True, si=fileObj.name)
         else:
-            cmds.textScrollList(widgets["charTSL"], e=True, sii=1)
+            #get current tab, select the first item in the corresponding tsl
+            tab = cmds.tabLayout(widgets["assetsTab"], q=True, st=True)
+            if tab == "CHARS":
+                asstab = "charTSL"
+            if tab == "PROPS":
+                asstab = "propTSL"
+            if tab == "SETS":
+                asstab = "setTSL"
+            if tab == "STGS":
+                asstab = "stageTSL"
+            cmds.textScrollList(widgets[asstab], e=True, sii=1)
     else:
         cmds.tabLayout(widgets["assetsTab"], e=True, st="CHARS")
         cmds.textScrollList(widgets["charTSL"], e=True, sii=1)
@@ -441,6 +448,7 @@ def get_stage_info(proj, *args):
         assetPath (string) - the path to the asset folder ("x://.../Stage/FireFlyStage") based on above
         assetFiles (list) - list of asset file paths based on above
     """
+    proj = ai.AssetInfo()
     asset = None
     assetFiles = None
     assetR = cmds.textScrollList(widgets["stageTSL"], q=True, si=True)
