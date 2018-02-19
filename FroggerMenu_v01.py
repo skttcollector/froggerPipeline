@@ -60,7 +60,6 @@ def Menu(*args, **kwargs):
 
     #pipeline tools submenu
     pPipelineMenu=mc.menuItem(sm=1, l="Pipeline Tools", p=pMainMenu)
-    mc.menuItem(l="Change Project", c=setProject, p=pPipelineMenu)    
     mc.menuItem(l="File Manager", c=fileManager, p=pPipelineMenu)
     mc.menuItem(l="Asset Manager", c=assetManager, p=pPipelineMenu)
     mc.menuItem(l="Update All References", c=updateRefs, p=pPipelineMenu)
@@ -68,6 +67,7 @@ def Menu(*args, **kwargs):
     mc.menuItem(l="Asset Publish And Version Up", c=partial(assPublishVersion, True), p=pPipelineMenu)
     mc.menuItem(l="Asset Publish Don't Version Up", c=partial(assPublishVersion, False), p=pPipelineMenu)
     mc.menuItem(l="Stage Publish (multi reference)", c=partial(stagePublish, False), p=pPipelineMenu)
+    mc.menuItem(l="Change Project", c=setProject, p=pPipelineMenu)   
 
     #anim tools submenu
     animMenu=mc.menuItem(sm=1, l="Anim Tools", p=pMainMenu)
