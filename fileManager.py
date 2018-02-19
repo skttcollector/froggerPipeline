@@ -465,7 +465,8 @@ def get_stage_info(proj, *args):
     return(tab, phase, assetPath, assetFiles)    
 
 
-def open_selected(proj, *args):
+def open_selected(*args):
+    proj = ai.AssetInfo()
     # if no file then warn and skip
     selFile = cmds.textScrollList(widgets["filesTSL"], q=True, si=True)[0]
     if selFile == "No Files":
