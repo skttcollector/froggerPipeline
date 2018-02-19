@@ -13,8 +13,8 @@ def set_project_UI(*args):
 	widgets["mainCLO"] = cmds.columnLayout(w=300, h=200)
 	cmds.text("Click the project you'll be working in", al="left")
 	cmds.separator(h=10)
-	widgets["frog"] = cmds.button(l="OutOfBoxExperience Project", w=300, h=40, bgc=(.5, .5, .5), c=partial(set_project_env_variables, "OutOfBoxExperience"))
-	widgets["fit"] = cmds.button(l="FitAndSetup Project", w=300, h=40, bgc=(.3, .3, .3), c=partial(set_project_env_variables, "FitAndSetup"))
+	widgets["frog"] = cmds.button(l="OutOfBoxExperience Project", w=300, h=40, bgc=(.7, .7, .5), c=partial(set_project_env_variables, "OutOfBoxExperience"))
+	widgets["fit"] = cmds.button(l="FitAndSetup Project", w=300, h=40, bgc=(.5, .7, .7), c=partial(set_project_env_variables, "FitAndSetup"))
 
 	cmds.window(widgets["win"], e=True, w=5, h=5, rtf=True)
 	cmds.showWindow(widgets["win"])
@@ -43,7 +43,7 @@ def set_project_env_variables(proj = None, *args):
 	os.environ["MAYA_CURRENT_PROJECT"] = currProj
 	os.environ["MAYA_PROJECT_PATH"] = projPath
 
-	print "Set current project (MAYA_CURRENT_PROJECT env var) to {0}\nSet current project path (MAYA_PROJECT_PATH env var) to {1} ".format(currProj, projPath)
+	cmds.warning("Set current project (MAYA_CURRENT_PROJECT env var) to {0}\nSet current project path (MAYA_PROJECT_PATH env var) to {1} ".format(currProj, projPath))
 
 	if cmds.window("setProjectWin", exists=True):
 		cmds.deleteUI(widgets["win"])
