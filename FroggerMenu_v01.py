@@ -5,10 +5,13 @@ import maya.mel as mel
 # python imports
 from functools import partial
 import os 
+import webbrowser as web
 
 # initialize the maya env variables
 os.environ["MAYA_PROJECT_PATH"] = "X:/Production"
 os.environ["MAYA_CURRENT_PROJECT"] = "OutOfBoxExperience"
+
+helpdocs = "https://docs.google.com/document/d/1cNsxLUXJu-CyAdWVTAz31QhK2i0ipl2gH8_f6XyiyuU/edit?usp=sharing"
 
 # Pipeline imports
 import openSceneFile as osf
@@ -23,7 +26,7 @@ import Publishing.AssetPublish as assPub
 import Publishing.multiRefAnimExport as mre
 import updateAllReferences as upd
 
-#Utility imoports
+#Utility imports
 import Utilities.projectGlobals as pg
 
 #import anim tools
@@ -84,6 +87,11 @@ def Menu(*args, **kwargs):
     # run project setter
     os.environ["MAYA_PROJECT_PATH"] = "X:/Production"
     os.environ["MAYA_CURRENT_PROJECT"] = "Frogger"
+
+    # help stuff
+    helpMenu = mc.menuItem(sm=1, l="Help", p=pMainMenu)
+    mc.menuItem(l="Open Help Docs", c=open_help, p=helpMenu)
+
     # set project window
     sp.setProject()
 
@@ -146,3 +154,8 @@ def importTemplate(*args, **kwargs):
 def collectTextures(*args, **kwargs):
     mel.eval('source "X:/Production/Code/Maya/Scripts/Mel/collectTextures.mel";')
     mel.eval("collectTextures;")
+
+
+# HELP STUFF
+def open_help(*args):
+    web.open(helpdocs, new=1) # 1 means tries to open in new window

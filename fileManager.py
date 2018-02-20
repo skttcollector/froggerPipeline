@@ -574,4 +574,6 @@ def save_as_new(selectionBased=False, *args):
 
 
 def fileManager(*args):
+    if cmds.window("saveAsWin", exists=True):
+        cmds.deleteUI("saveAsWin")
     file_UI_create()
