@@ -17,7 +17,7 @@ import saveSceneAsVersion as sav
 import fileManager as fileMgr
 import assetManager as assMgr
 import setProject as sp
-
+import Utilities.utilityFunctions as uf
 # Publishing imports
 import Publishing.AssetPublish as assPub
 import Publishing.multiRefAnimExport as mre
@@ -32,7 +32,7 @@ import Anim.zb_spaceMatching as zbsm
 #import rigging tools
 import importTemplate_v01 as it
 
-imps = [osf, ssv, sav, fileMgr, assMgr, sp, assPub, mre, upd, pg, zbsm, it]
+imps = [osf, ssv, sav, fileMgr, assMgr, sp, assPub, mre, upd, pg, zbsm, it, uf]
 for i in imps:
     reload(i)
 

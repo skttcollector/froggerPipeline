@@ -10,7 +10,8 @@ import Utilities.versionFile as vf
 import openSceneFile as of
 import Utilities.utilityFunctions as uf
 import saveNewWindows as snw
-import setProject as sp
+reload(snw)
+
 
 # TODO
 # image?
@@ -131,6 +132,7 @@ def set_project(*args):
         cmds.error("fileManager.set_project: There was an issue! I can't find 'MAYA_CURRENT_PROJECT' in your environment variables!")
     
     load_asset_info("first")
+
 
 def save_layout(*args):
     """

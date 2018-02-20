@@ -369,6 +369,8 @@ def finish_up(versionUp=True, origScene=None, *args):
     
     if cmds.window("gameExporterWindow", exists=True):
         cmds.deleteUI("gameExporterWindow")
+    # reload file win
+    fm.fileManager()
 
 
 def bake_selected(bakeList, start, end, *args):

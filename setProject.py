@@ -3,6 +3,8 @@ import maya.cmds as cmds
 import os
 from functools import partial
 
+import fileManager as fm
+
 widgets = {}
 
 def set_project_UI(*args):
@@ -48,8 +50,7 @@ def set_project_env_variables(proj = None, *args):
 	if cmds.window("setProjectWin", exists=True):
 		cmds.deleteUI(widgets["win"])
 
-	if cmds.window("fileWin", exists=True):
-		cmds.deleteUI("fileWin")
+	fm.fileManager()
 
 
 def setProject(*args):

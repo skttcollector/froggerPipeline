@@ -7,6 +7,7 @@ import maya.mel as mel
 
 import Utilities.utilityFunctions as uf
 import Utilities.projectGlobals as pg
+import fileManager as fm
 
 # the fbx presets
 anmPreset=pg.animFBXExport
@@ -465,4 +466,6 @@ def assetPublish(versionUp=True, *args):
     # close the game export window
     if cmds.window("gameExporterWindow", exists=True):
         cmds.deleteUI("gameExporterWindow")
+    # reload file win
+    fm.fileManager()
 

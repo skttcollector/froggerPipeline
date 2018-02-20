@@ -5,6 +5,8 @@ import Utilities.utilityFunctions as uf
 
 # this is for the project as a whole to gather info on folders and files, fix paths, etc
 
+# TODO - dummy check that the folder exists? 
+
 class AssetInfo(object):
     def __init__(self):
         if "MAYA_PROJECT_PATH" in os.environ:

@@ -5,6 +5,7 @@ import maya.cmds as cmds
 import Utilities.assetInfo as ai
 import Utilities.utilityFunctions as uf
 import Utilities.versionFile as vf
+import fileManager as fm
 
 #callback dismiss function to get the values of the stuff inside
 class SaveNewAssetUI(object):
@@ -13,10 +14,11 @@ class SaveNewAssetUI(object):
         self.projEnvPath = os.environ["MAYA_PROJECT_PATH"]
         self.selBased = selectionBased
         self.filePath = filePath
+        print "filePath: ", self.filePath
         self.proj = ai.AssetInfo()
         self.pp = uf.PathParser(filePath)
         if not self.pp.compatible:
-# need to get a default setting for these
+# dummy check that the folders exist
             files = self.proj.get_asset_contents(self.proj.charsPath[0])
             self.filepath = "{0}{1}".format(self.proj.charsPath[0], files[0])
         self.assetList = self.proj.get_asset_name_list()   
@@ -179,6 +181,9 @@ class SaveNewAssetUI(object):
                 os.remove(tempScene)
 
         # Try to refresh the file manager window
+        if cmds.window("fileWin", exists=True):
+            fm.fileManager()
+
 
 def create_temp_scene(filepath, *args):
     tempFile = filepath[:-3] + "_temp.mb"
