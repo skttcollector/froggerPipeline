@@ -32,7 +32,8 @@ class SaveNewAssetUI(object):
         self.win = cmds.window("saveAsWin", t="Save New", w=220, h=220)
         self.form = cmds.formLayout(w=220, h=220)
 
-        t1 = cmds.text(l="Save As New Options:")
+        t1 = cmds.text(l="Save As New Destination Options:")
+        t2 = cmds.text(l="Project: {0}".format(os.environ["MAYA_CURRENT_PROJECT"]), font="boldLabelFont")
 
         self.assetTypeOM = cmds.optionMenu(l="Asset Type:", w=200, cc=self.change_asset_type)
         cmds.menuItem(l="Character", p=self.assetTypeOM)
@@ -69,16 +70,17 @@ class SaveNewAssetUI(object):
                 cmds.menuItem(self.rig, e=True, en=False)
 
         self.but = cmds.button(l="Save File!", bgc = (.5, .7, .5), w=100, h=30, c=self.save_file)
-        self.cancel = cmds.button(l="Cancel", bgc = (.7, .5, .5), w=100, h=30)
+        self.cancel = cmds.button(l="Cancel", bgc = (.7, .5, .5), w=100, h=30, c=self.cancel)
 
         cmds.formLayout(self.form, e=True, attachForm = [
-            (t1, "top", 10), (t1, "left", 5), 
-            (self.assetTypeOM, "top", 40), (self.assetTypeOM, "left", 5),
-            (self.assetOM, "top", 70), (self.assetOM, "left", 5),
-            (self.variant, "top", 100), (self.variant, "left", 5),
-            (self.phaseOM, "top", 130), (self.phaseOM, "left", 5),                             
-            (self.but, "top", 170), (self.but, "left", 5),
-            (self.cancel, "top", 170), (self.cancel, "left", 120),
+            (t1, "top", 2), (t1, "left", 5),
+            (t2, "top", 20), (t2, "left", 5),
+            (self.assetTypeOM, "top", 45), (self.assetTypeOM, "left", 5),
+            (self.assetOM, "top", 75), (self.assetOM, "left", 5),
+            (self.variant, "top", 105), (self.variant, "left", 5),
+            (self.phaseOM, "top", 135), (self.phaseOM, "left", 5),                             
+            (self.but, "top", 175), (self.but, "left", 5),
+            (self.cancel, "top", 175), (self.cancel, "left", 120),
         ])
 
         cmds.window(self.win, e=True, w=230, h=220, rtf=True, s=False)
@@ -114,6 +116,10 @@ class SaveNewAssetUI(object):
         
         for x in self.assetList[y]:
             cmds.menuItem(l=x, p=self.assetOM)
+
+
+    def cancel(self, *args):
+        cmds.deleteUI("saveAsWin")
 
 
     def save_file(self, *args):
