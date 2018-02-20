@@ -469,3 +469,5 @@ def assetPublish(versionUp=True, *args):
     # reload file win
     fm.fileManager()
 
+    cmds.confirmDialog(m="Asset Publish Sucessful!", t="AssetPublish")
+

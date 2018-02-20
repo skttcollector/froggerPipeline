@@ -270,7 +270,7 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, references=None, *args
 
         # here's where we'd do the folder (figure out path stuff) - add the variant name
         pubFbxPath = uf.fix_path(os.path.join(pp.phasePath, "Publish/MB/{0}_v{1}".format(pp.variant, pp.versionString)))
-        print "------- trying to make dirctory: {0}".format(pubFbxPath)
+        print "------- trying to make directory: {0}".format(pubFbxPath)
         if not os.path.exists(pubFbxPath):
             os.makedirs(pubFbxPath)
         tokens = pp.fileName.split("_")
@@ -371,6 +371,8 @@ def finish_up(versionUp=True, origScene=None, *args):
         cmds.deleteUI("gameExporterWindow")
     # reload file win
     fm.fileManager()
+
+    cmds.confirmDialog(m="Animation published successfully!", t="Stage Publish")
 
 
 def bake_selected(bakeList, start, end, *args):

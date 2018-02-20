@@ -184,6 +184,7 @@ class SaveNewAssetUI(object):
         if cmds.window("fileWin", exists=True):
             fm.fileManager()
 
+        cmds.confirmDialog(m="Save successful! You're now in file:\n{0}".format(cmds.file(q=True, sn=True)))
 
 def create_temp_scene(filepath, *args):
     tempFile = filepath[:-3] + "_temp.mb"
