@@ -1,6 +1,8 @@
 """
 re-adjust naming convention on anim publishes (line up Asset with stage MBs)
+
 get enter press working for gameexporter stuff
+
 asset manager - import option
 				- variant referencing
 

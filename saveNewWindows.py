@@ -133,8 +133,15 @@ class SaveNewAssetUI(object):
 
         currscene = cmds.file(q=True, sn=True)
         if currscene:
-            print "Saving current scene: {0}".format(currscene)
-            cmds.file(s=True, f=True)
+            saveScene =cmds.confirmDialog(t="Save?", m="Should I save the current scene before writing new file?", button=["Yes", "No", "Cancel"], defaultButton="Yes", cancelButton="Cancel", dismissString="Cancel")
+            if saveScene == "Yes":
+                print "Saving current scene: {0}".format(currscene)
+                cmds.file(s=True, f=True)
+            elif saveScene == "No":
+                pass
+            elif saveScene == "Cancel":
+                cmds.warning("Cancelling Save As New!")
+                return()
         else:
             pass
             # cmds.warning("You must be in a named scene to continue!")
