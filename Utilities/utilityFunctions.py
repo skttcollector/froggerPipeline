@@ -127,7 +127,7 @@ class PathParser(object):
         """
         projectPath = os.environ["MAYA_PROJECT_PATH"] # ex "X:/Production"
         # for now check that it's on the the x drive, in Production
-        regex = r"\b(?:[a-z]+_){4}v\d{4}\.mb\b"
+        regex = r"\b(?:[\w]+_){4}v\d{4}\.mb\b"   
         test_str = path
         matches = re.search(regex, test_str, re.IGNORECASE)
 
