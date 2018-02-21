@@ -8,6 +8,7 @@ import maya.mel as mel
 
 import Utilities.utilityFunctions as uf
 import Utilities.projectGlobals as pg
+import fileManager as fm
 
 # the fbx presets
 anmPreset=pg.animFBXExport

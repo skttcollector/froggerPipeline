@@ -16,10 +16,12 @@ modelPreset=pg.modelFBXExport
 
 def publish_maya_scene(versionUp=True, origScene=None, *args):
     """
-    only do for rigging and modeling phase of assets
+    only do for rigging, texturing and modeling phase of assets
     ARGS:
         versionUp (bool): whether to version up the maya scene
         origScene (string): the full path to the file to publish
+    RETURN:
+        bool: whether we've successfully published or not
     """
     if not origScene:
         cmds.warning("assetPublish.publish_maya_scene: You haven't passed in a scene path!")
@@ -48,7 +50,7 @@ def publish_maya_scene(versionUp=True, origScene=None, *args):
 
         if overwrite == "Cancel":
             print "Publish skipped (no overwrite) for maya file (.mb) stage of {0}".format(pubFilePath)
-            return(True)
+            return(False)
 
     if versionUp:
         # in background copy the orig to the new version 
@@ -82,7 +84,7 @@ def get_version_up_name(origScene, *args):
 
 def check_correspondence(geoList, jntList):
     """
-    checks that a geo grp exists for each root jnt grp and visa versa
+    This is for rig files. This func checks that a geo grp exists for each root jnt grp and visa versa.
     """
     for jnt in jntList:
         name = jnt.split("_Root_Jnt")[0]
@@ -101,6 +103,12 @@ def check_correspondence(geoList, jntList):
 
 def publish_fbx_model_file(versionUp=True, origScene=None, *args):
     """
+    publishes fbx for model and texture files
+    ARGS:
+        versionUp (bool): whether we should version up the Maya scene after publish or not
+        origScene (string): the full to the original Maya scene file
+    RETURN:
+        bool: whether we've successfully published or not
     """
     # all happens in current:
     if not origScene:
@@ -138,9 +146,15 @@ def publish_fbx_model_file(versionUp=True, origScene=None, *args):
 
 def publish_fbx_rig_file(versionUp=True, origScene=None, *args):
     """
+    publishes fbx for rig files
     requires an EXPORT_JNT_Grp group with one root for each export rig named: 'name_Root_Jnt'
     requires a GEO group with one folder for each export rig named: 'name_Geo_Grp'
     names should correspond ("fish_Root_Jnt", "fish_Geo_Grp")
+    ARGS:
+        versionUp (bool): whether we should version up the Maya scene after publish or not
+        origScene (string): the full to the original Maya scene file
+    RETURN:
+        bool: whether we've successfully published or not
     """
     # all happens in current:
     if not origScene:
@@ -181,7 +195,7 @@ def publish_fbx_rig_file(versionUp=True, origScene=None, *args):
     pubFileName = "_".join(tokens)[:-3] + ".fbx"
     pubFilePath = uf.fix_path(os.path.join(pubFbxPath, pubFileName))
 
-# check if there's any animation in the file (time based), abort if there is
+# check if there's any animation in the file (time based), abort if there is?
 # check for references, etc. . 
 
     # delete constraints
@@ -213,8 +227,9 @@ def publish_fbx_rig_file(versionUp=True, origScene=None, *args):
 
 
 def publish_fbx_anim_file(versionUp=True, origScene=None, *args):
-    # THIS IS FOR ANIM EXPORTING
-
+    """
+    This is for asset anim exporting. File requires ONE AND ONLY ONE reference
+    """
 # save current scene
 # check whether gameexport plug in is loaded
     mel.eval("gameFbxExporter;")
