@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"proje",
+				"projectGlobals"
+			],
+			[
+				"canc",
+				"cancelButton"
+			],
+			[
 				"help",
 				"helpdocs"
 			],
@@ -506,14 +514,6 @@
 			[
 				"ma",
 				"mainFLO"
-			],
-			[
-				"option",
-				"optionMenu"
-			],
-			[
-				"def",
-				"deferred"
 			]
 		]
 	},
@@ -524,6 +524,52 @@
 			"settings":
 			{
 				"buffer_size": 921,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Publishing/multiRefAnimExport.py",
+			"settings":
+			{
+				"buffer_size": 20765,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "todoList.py",
+			"settings":
+			{
+				"buffer_size": 669,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "project=\"Frogger\"\npadding=4\nfilefolder=\"scenes\"\ndefaultPath=\"//caddy/work/current/FROGGER_MAGFL-N400/Frogger/Production\"\nriggingPath=\"%s/Code/Maya/RiggingTools\"%defaultPath\n\n# project dictionary key=project name, value = project path\nprojects = {\"OutOfBoxExperience\":\"X:/Production\", \"FitAndSetup\":\"Y:/Production\"}\n\n# might need to the os.environ var to these paths if they're different for each project. . . \nrigFBXExport = \"X:/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/fbxPresets/rig_cm_triang_binary.fbxexportpreset\"\nanimFBXExport = \"X:/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/fbxPresets/anim_cm_triang_binary.fbxexportpreset\"\nmodelFBXExport = \"X:/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/fbxPresets/model_cm_triang_binary.fbxexportpreset\"",
+			"file": "Utilities/projectGlobals.py",
+			"file_size": 810,
+			"file_write_time": 131638058772034958,
+			"settings":
+			{
+				"buffer_size": 796,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "import sys\nimport webbrowser as browser\nimport os\nfrom functools import partial\n\nimport maya.cmds as cmds\n\nimport Utilities.assetInfo as ai\nimport Utilities.versionFile as vf\nimport openSceneFile as of\nimport Utilities.utilityFunctions as uf\nimport saveNewWindows as snw\nimport Utilities.projectGlobals as pg\n\n# TODO\n# image?\n# find a way to consolidate project names, env variables, etc to populate the list here and in project setter, etc  \n\nwidgets = {}\n\ndef file_UI_create(*args):\n    \"\"\"\n    ui\n    \"\"\"\n    if cmds.window(\"fileWin\", exists=True):\n        cmds.deleteUI(\"fileWin\")\n\n    w = 740\n    h = 480\n    widgets[\"win\"] = cmds.window(\"fileWin\", t=\"File Manager\", w=w, h=h, s=False)\n    widgets[\"menu\"] = cmds.menuBarLayout()\n    widgets[\"menuFile\"] = cmds.menu(label=\"Presets\")\n    cmds.menuItem(l='Save Layout', c=save_layout)\n    cmds.menuItem(l=\"Delete Layout\", c=delete_layout)\n\n    cmds.setParent(widgets[\"win\"])\n    widgets[\"mainCLO\"] = cmds.columnLayout(w=w, h=h)\n    widgets[\"mainFLO\"] = cmds.formLayout(w=w, h=h, bgc=(.2,.2,.2))\n    widgets[\"projOM\"] = cmds.optionMenu(l=\"PROJECT:\", changeCommand=change_project)\n    cmds.menuItem(label=\"OutOfBoxExperience\")\n    cmds.menuItem(label=\"FitAndSetup\")\n    aw = 220\n    widgets[\"assetsFLO\"] = cmds.formLayout(w=aw, h=430)\n    widgets[\"assetsTab\"] = cmds.tabLayout(w=aw,h=430, cc=change_stage_tab)\n    widgets[\"charCLO\"] = cmds.columnLayout(\"CHARS\", w=aw, h=400)\n    widgets[\"charTSL\"] = cmds.textScrollList(w=aw, h=400)\n    cmds.setParent(widgets[\"assetsTab\"])\n    widgets[\"propCLO\"] = cmds.columnLayout(\"PROPS\", w=aw, h=400)\n    widgets[\"propTSL\"] = cmds.textScrollList(w=aw, h=400)\n    cmds.setParent(widgets[\"assetsTab\"])\n    widgets[\"setCLO\"] = cmds.columnLayout(\"SETS\", w=aw, h=400)\n    widgets[\"setTSL\"] = cmds.textScrollList(w=aw, h=400)\n    cmds.setParent(widgets[\"assetsTab\"])\n    widgets[\"stageCLO\"] = cmds.columnLayout(\"STGS\", w=aw, h=400)\n    widgets[\"stageTSL\"] = cmds.textScrollList(w=aw, h=400)       \n    cmds.formLayout(widgets[\"assetsFLO\"], e=True, af = [(widgets[\"assetsTab\"], \"top\", 10), (widgets[\"assetsTab\"], \"left\", 0),\n        ])\n    \n    cmds.setParent(widgets[\"mainFLO\"])\n    widgets[\"filesFLO\"] = cmds.formLayout(w=350,h=450)\n\n    widgets[\"filesTSL\"] = cmds.textScrollList(w=350, h=400, dcc=open_selected)\n    widgets[\"phaseOM\"] = cmds.optionMenu( label='Phase: ', changeCommand=populate_files)\n    cmds.menuItem(label=\"Modeling\")\n    cmds.menuItem(label=\"Rigging\")\n    cmds.menuItem(label=\"Animation\")\n    cmds.menuItem(label=\"Lighting\")\n    cmds.menuItem(label=\"Texturing\")\n    cmds.formLayout(widgets[\"filesFLO\"], e=True, af = [\n        (widgets[\"filesTSL\"], \"top\", 23), (widgets[\"filesTSL\"], \"left\", 0),\n        (widgets[\"phaseOM\"], \"top\", 0), (widgets[\"phaseOM\"], \"left\", 10)\n        ])\n\n    cmds.setParent(widgets[\"mainFLO\"])\n\n    widgets[\"openBut\"] = cmds.button(l=\"Open Selected\", w=125, h=30, bgc=(.3, .3, .3), c=open_selected)\n    widgets[\"versionBut\"] = cmds.button(l=\"Version Up Current\", w=125, h=30, bgc=(.3, .3, .3), c=version_up)\n    widgets[\"saveAsBut\"] = cmds.button(l=\"Save Scene To New File\", w=125, h=30, bgc=(.3, .3, .3), c=partial(save_as_new, False))\n    widgets[\"saveSelBut\"] = cmds.button(l=\"Save Selection To New\", w=125, h=20, bgc=(.3, .3, .3), c=partial(save_as_new, True))\n    widgets[\"refreshBut\"] = cmds.button(l=\"Refresh Window\", w=125, h=30, bgc=(.3, .3, .3), c=load_asset_info)\n\n\n    cmds.formLayout(widgets[\"mainFLO\"], e=True, af = [\n        (widgets[\"projOM\"], \"top\", 5), (widgets[\"projOM\"], \"left\", 5),\n        (widgets[\"assetsFLO\"], \"top\", 25), (widgets[\"assetsFLO\"], \"left\", 5),\n        (widgets[\"filesFLO\"], \"top\", 35), (widgets[\"filesFLO\"], \"left\", 240),\n        (widgets[\"openBut\"], \"top\", 60),(widgets[\"openBut\"], \"left\", 600),\n        (widgets[\"versionBut\"], \"top\", 110),(widgets[\"versionBut\"], \"left\", 600),\n        (widgets[\"saveAsBut\"], \"top\", 260),(widgets[\"saveAsBut\"], \"left\", 600),\n        (widgets[\"saveSelBut\"], \"top\", 375),(widgets[\"saveSelBut\"], \"left\", 600),\n        (widgets[\"refreshBut\"], \"top\", 420),(widgets[\"refreshBut\"], \"left\", 600),\n        ])\n\n\n    cmds.window(widgets[\"win\"], e=True, w=5, h=5, rtf=True)\n    cmds.showWindow(widgets[\"win\"])\n\n    set_project()\n    load_asset_info(\"first\")\n\n\ndef change_project(*args):\n    project = cmds.optionMenu(widgets[\"projOM\"], q=True, value=True)\n    os.environ[\"MAYA_CURRENT_PROJECT\"] = project\n    os.environ[\"MAYA_PROJECT_PATH\"] = pg.projects[project]\n    \n    print \"{0} is now the current project (MAYA_CURRENT_PROJECT env var)\\n{1} is now the current project path (MAYA_PROJECT_PATH env var)\".format(project, pg.projects[project])   \n    set_project()\n    \n\ndef set_project(*args):\n    \"\"\"\n    gets the current project in the maya environment variables and sets it to the option menu\n    RETURNS:\n        string - the value for the MAYA_CURRENT_PROJECT env variable (\"OutOfBoxExperience or \")\n    \"\"\"\n    if \"MAYA_CURRENT_PROJECT\" in os.environ:\n        ev = os.environ[\"MAYA_CURRENT_PROJECT\"]\n        if ev in pg.projects.keys():\n            cmds.optionMenu(widgets[\"projOM\"], e=True, value=ev)\n    else:\n        cmds.optionMenu(widgets[\"projOM\"], e=True, value=\"OutOfBoxExperience\")\n        cmds.error(\"fileManager.set_project: There was an issue! I can't find 'MAYA_CURRENT_PROJECT' in your environment variables!\")\n    \n    load_asset_info(\"first\")\n\n\ndef save_layout(*args):\n    \"\"\"\n    saves a small text doc to userpref folder that will tell UI on open which phase to set the option menu to (rigging, anim, etc)\n    \"\"\"\n    phaseValue = \"{0}\\n\".format(cmds.optionMenu(widgets[\"phaseOM\"], q=True, value=True))\n    #stageValue = \"{0}\\n\".format(cmds.tabLayout(widgets[\"assetsTab\"], q=True, st=True))\n    #write to file\n    userDir = cmds.internalVar(upd=True) + \"frogger_fileManagerLayout.txt\"\n    file = open(userDir, \"w\")\n\n    file.write(phaseValue)\n    #file.write(stageValue)\n\n    file.close()\n\n\ndef load_layout(*args):\n    \"\"\"\n    RETURNS:\n        string: the value to set in the phaseOM option menu\n    \"\"\"\n    userDir = cmds.internalVar(upd=True) + \"frogger_fileManagerLayout.txt\"\n    if os.path.isfile(userDir):\n        file = open(userDir, \"r\")\n        values = []\n\n        for line in file:\n            values.append(line.rstrip(\"\\n\"))\n        file.close()\n\n        cmds.optionMenu(widgets[\"phaseOM\"], e=True, value=values[0])\n        # cmds.tabLayout(widgets[\"assetsTab\"], e=True, st=values[1])\n        return(values[0])\n    else:\n        return(None)\n\n\ndef delete_layout(*args):\n    userDir = cmds.internalVar(upd=True) + \"frogger_fileManagerLayout.txt\"\n    if os.path.isfile(userDir):\n        os.remove(userDir)\n        print \"Deleted saved layout for fileManager\"\n\n\ndef load_asset_info(counter=None, *args):\n    \"\"\"\n    gets the info for the assets in the project\n    ARGS:\n        counter (string) \n    \"\"\"\n    clear_asset_lists()\n\n    proj = ai.AssetInfo()\n    assetNames = proj.get_asset_name_list()\n\n    for asset in assetNames[0]:\n        cmds.textScrollList(widgets[\"charTSL\"], e=True, a=asset, sc=partial(populate_files, proj))\n    for asset in assetNames[1]:\n        cmds.textScrollList(widgets[\"propTSL\"], e=True, a=asset, sc=partial(populate_files, proj))\n    for asset in assetNames[2]:\n        cmds.textScrollList(widgets[\"setTSL\"], e=True, a=asset, sc=partial(populate_files,proj))\n    for asset in assetNames[3]:\n        cmds.textScrollList(widgets[\"stageTSL\"], e=True, a=asset, sc=partial(populate_files, proj))\n\n    select_initial(proj, counter)\n\n\ndef select_initial(proj, counter, *args):\n    \"\"\"\n    tries to select the first item in chars, if not, then props, etc. If no item, pass\n    !! finish this later\n    \n    ARGS:\n        proj (AssetInfo object)\n        counter (string) \n    \"\"\"\n\n    # if we're in a scene with a name\n    filename = cmds.file(q=True, sn=True)\n\n    if filename:\n        fileObj = uf.PathParser(filename)\n        # if that scene is compatible\n        if fileObj.compatible and fileObj.stage == \"Work\":\n            # get the asset type - select the tab\n            if fileObj.assetType == \"Character\":\n                assType, assTab = \"CHARS\", \"charTSL\"\n            if fileObj.assetType == \"Props\":\n                assType, assTab = \"PROPS\", \"propTSL\"\n            if fileObj.assetType == \"Sets\":\n                assType, assTab = \"SETS\", \"setTSL\"              \n            if fileObj.assetType == \"Stages\":\n                assType, assTab = \"STGS\", \"stageTSL\"\n            cmds.tabLayout(widgets[\"assetsTab\"], e=True, st=assType)\n            # get the phase - select the menu\n            cmds.optionMenu(widgets[\"phaseOM\"], e=True, value=fileObj.phase)  \n            cmds.textScrollList(widgets[assTab], e=True, si=fileObj.name)\n        else:\n            #get current tab, select the first item in the corresponding tsl\n            tab = cmds.tabLayout(widgets[\"assetsTab\"], q=True, st=True)\n            if tab == \"CHARS\":\n                asstab = \"charTSL\"\n            if tab == \"PROPS\":\n                asstab = \"propTSL\"\n            if tab == \"SETS\":\n                asstab = \"setTSL\"\n            if tab == \"STGS\":\n                asstab = \"stageTSL\"\n            cmds.textScrollList(widgets[asstab], e=True, sii=1)\n    else:\n        cmds.tabLayout(widgets[\"assetsTab\"], e=True, st=\"CHARS\")\n        cmds.textScrollList(widgets[\"charTSL\"], e=True, sii=1)\n    if counter:\n        load = load_layout()\n        if load:\n            cmds.optionMenu(widgets[\"phaseOM\"], e=True, v=load)\n\n    counter = None\n\n    populate_files(proj)\n\n\ndef clear_asset_lists(*args):\n    \"\"\"\n    clears all the asset text scroll lists\n    \"\"\"\n    cmds.textScrollList(widgets[\"charTSL\"], e=True, ra=True)\n    cmds.textScrollList(widgets[\"propTSL\"], e=True, ra=True)\n    cmds.textScrollList(widgets[\"setTSL\"], e=True, ra=True)\n    cmds.textScrollList(widgets[\"stageTSL\"], e=True, ra=True)\n\n\ndef clear_file_list(*args):\n    \"\"\"\n    clears file text scroll list\n    \"\"\"\n    cmds.textScrollList(widgets[\"filesTSL\"], e=True, ra=True)\n\n\ndef change_stage_tab(*args):\n    \"\"\"\n    when tab changes, just select first in the list\n    \"\"\"\n    proj = ai.AssetInfo()\n\n    currTab = cmds.tabLayout(widgets[\"assetsTab\"], q=True, st=True)\n    currScene = cmds.file(q=True, sn=True)\n    if currTab == \"CHARS\":\n        tsl = \"char\"\n        cmds.optionMenu(widgets[\"phaseOM\"], e=True, en=True)\n    if currTab == \"PROPS\":\n        tsl = \"prop\"\n        cmds.optionMenu(widgets[\"phaseOM\"], e=True, en=True)\n    if currTab == \"SETS\":\n        tsl = \"set\"\n        cmds.optionMenu(widgets[\"phaseOM\"], e=True, en=True)\n    if currTab == \"STGS\":\n        tsl = \"stage\"   \n        cmds.optionMenu(widgets[\"phaseOM\"], e=True, en=False, v=\"Animation\")\n\n    if currScene:\n        # try to find in the current scene\n        pp = uf.PathParser(currScene)\n        if pp.compatible:\n            if pp.name in cmds.textScrollList(widgets[\"{0}TSL\".format(tsl)], q=True, allItems=True):\n                cmds.textScrollList(widgets[\"{0}TSL\".format(tsl)], e=True, si=pp.name)\n            else:\n                cmds.textScrollList(widgets[\"{0}TSL\".format(tsl)], e=True, sii=1)\n        else:\n            cmds.textScrollList(widgets[\"{0}TSL\".format(tsl)], e=True, sii=1)\n    else:\n        cmds.textScrollList(widgets[\"{0}TSL\".format(tsl)], e=True, sii=1)\n\n    populate_files(proj)\n\n\ndef populate_files(proj, *args):\n    \"\"\"\n    clears the file list, then populates based on the phase and the selected asset in the asset TSL\n    \"\"\"\n    proj = ai.AssetInfo()\n\n    clear_file_list()\n\n    selTab = cmds.tabLayout(widgets[\"assetsTab\"], q=True, st=True)\n\n    tab, phase, assetPath, assetFiles = [None, None, None, None]\n\n    if selTab != \"STGS\":\n        tab, phase, assetPath, assetFiles = get_asset_info(proj)\n    else:\n        tab, phase, assetPath, assetFiles = get_stage_info(proj)\n\n    if assetFiles:\n        for file in assetFiles:\n            a = cmds.textScrollList(widgets[\"filesTSL\"], e=True, a=os.path.basename(file))\n    else:\n        cmds.textScrollList(widgets[\"filesTSL\"], e=True, a=\"No Files\")\n\n    # add popmenu to the list object to go to explorer\n    cmds.popupMenu(p=widgets[\"filesTSL\"])\n    cmds.menuItem(l=\"Open Folder in Explorer\", c=get_path_explorer)\n\n    # try to line up the current scene in the file list\n    currFile = cmds.file(q=True, sn=True)\n    if currFile:\n        fileObj = uf.PathParser(currFile)\n        if fileObj.compatible and (os.path.basename(currFile) in assetFiles):\n            cmds.textScrollList(widgets[\"filesTSL\"], e=True, si=os.path.basename(currFile))\n    else:\n        # get the last file and select that\n        numItems = cmds.textScrollList(widgets[\"filesTSL\"], q=True, ni=True)\n        cmds.textScrollList(widgets[\"filesTSL\"], e=True, sii=numItems)\n\n\ndef get_path_explorer(*args):\n    # construct path from ui\n    currTab = cmds.tabLayout(widgets[\"assetsTab\"], q=True, st=True)\n    if currTab == \"CHARS\":\n        tsl = \"char\"\n        assType = \"Character\"\n    if currTab == \"PROPS\":\n        tsl = \"prop\"\n        assType = \"Props\"\n    if currTab == \"SETS\":\n        tsl = \"set\"\n        assType = \"Sets\"\n    if currTab == \"STGS\":\n        tsl = \"stage\"\n        assType = \"Stages\"\n    \n    phase = cmds.optionMenu(widgets[\"phaseOM\"], q=True, value=True)\n    asset = cmds.textScrollList(widgets[\"{0}TSL\".format(tsl)], q=True, si=True)[0]\n    base = os.environ[\"MAYA_PROJECT_PATH\"]\n    if currTab != \"STGS\":\n        path = \"{0}/Assets/3D/{1}/{2}/{3}/Work/Maya/scenes/\".format(base, assType, asset, phase)\n    else:\n        path = \"{0}/Stages/{1}/{2}/Production/Maya/scenes/\".format(base, asset, phase )\n\n    if os.path.isdir(path):\n        open_explorer(path)\n    else: \n        print \"Couldn't find the path: {0}\".format(path)\n\n\ndef open_explorer(path, *args):\n    \"\"\"takes in path and opens it in os folder\"\"\"\n    if os.path.isdir(path):\n        if sys.platform == \"win32\":\n            winPath = path.replace(\"/\", \"\\\\\")\n            browser.open(winPath)\n        elif sys.platform == \"darwin\":\n            pass\n        elif sys.platform == \"linux\" or sys.platform==\"linux2\":\n            pass\n\n\ndef get_asset_info(proj, *args):\n    \"\"\"\n    gets info from state of the ui\n    ARGS: \n        proj (AssetInfo object) - the info for the current set project\n    Returns:\n        tab (string) - which tab is selected (\"CHARS\", \"SETS\", \"PROPS\")\n        phase (string) - which phase we're in (\"Modeling\", \"Rigging\", etc)\n        assetPath (string) - the path to the asset folder (\"x://.../Assets/Character/Fish\") based on above\n        assetFiles (list) - list of asset file paths based on above\n    \"\"\"\n    proj = ai.AssetInfo()\n\n    asset = None\n    assetFiles = None\n    tab = cmds.tabLayout(widgets[\"assetsTab\"], q=True, st=True)\n    phase = cmds.optionMenu(widgets[\"phaseOM\"], q=True, value=True)\n\n    if tab == \"CHARS\":\n        asset = cmds.textScrollList(widgets[\"charTSL\"], q=True, si=True)[0]\n        assetPath = os.path.join(proj.charPath, asset)\n    if tab == \"PROPS\":\n        asset = cmds.textScrollList(widgets[\"propTSL\"], q=True, si=True)[0]\n        assetPath = os.path.join(proj.propPath, asset)\n    if tab == \"SETS\":\n        asset = cmds.textScrollList(widgets[\"setTSL\"], q=True, si=True)[0]\n        assetPath = os.path.join(proj.setPath, asset)\n\n    proj.get_asset_contents(assetPath)\n    if phase == \"Modeling\":\n        assetPath = proj.mdlPath\n        assetFiles = sorted(proj.mdlWorkFiles)\n    if phase == \"Rigging\":\n        assetPath = proj.rigPath\n        assetFiles = sorted(proj.rigWorkFiles)\n    if phase == \"Animation\":\n        assetPath = proj.anmPath\n        assetFiles = sorted(proj.anmWorkFiles)\n    if phase == \"Lighting\":\n        assetPath = proj.lgtPath\n        assetFiles = sorted(proj.lgtWorkFiles)\n    if phase == \"Texturing\":\n        assetPath = proj.txtPath\n        assetFiles = sorted(proj.txtWorkFiles)\n\n    return(tab, phase, assetPath, assetFiles)\n\n\ndef get_stage_info(proj, *args):\n    \"\"\"\n    gets info from state of the ui\n    ARGS:\n        proj (AssetInfo object) - the info for the current project files\n    Returns:\n        tab (string) - which tab is selected (\"CHARS\", \"SETS\", \"PROPS\", \"STGS\")\n        phase (string) - which phase we're in (\"Modeling\", \"Rigging\", etc)\n        assetPath (string) - the path to the asset folder (\"x://.../Stage/FireFlyStage\") based on above\n        assetFiles (list) - list of asset file paths based on above\n    \"\"\"\n    proj = ai.AssetInfo()\n    asset = None\n    assetFiles = None\n    assetR = cmds.textScrollList(widgets[\"stageTSL\"], q=True, si=True)\n    if not assetR:\n        assetR = cmds.textScrollList(widgets[\"stageTSL\"], q=True, sii=0)\n    asset = assetR[0]\n    assetPath = os.path.join(proj.stagePath, asset)  \n    tab = \"STGS\"\n    phase = \"Animation\"\n    proj.get_stage_contents(assetPath)\n    assetPath = proj.stageAnmPath\n    assetFiles = proj.stageAnmWorkFiles\n\n    return(tab, phase, assetPath, assetFiles)    \n\n\ndef open_selected(*args):\n    proj = ai.AssetInfo()\n    # if no file then warn and skip\n    selFile = cmds.textScrollList(widgets[\"filesTSL\"], q=True, si=True)[0]\n    if selFile == \"No Files\":\n        cmds.warning(\"No files available to open!\")\n        return()\n\n    # construct the paths\n    tab, phase, assetPath, assetFiles = [None, None, None, None]\n    selTab = cmds.tabLayout(widgets[\"assetsTab\"], q=True, st=True)\n    if selTab != \"STGS\":\n        tab, phase, assetPath, assetFiles = get_asset_info(proj)\n    else:\n        tab, phase, assetPath, assetFiles = get_stage_info(proj)\n    selIndex = cmds.textScrollList(widgets[\"filesTSL\"], q=True, sii=True)[0]\n    filePath = os.path.join(assetPath, assetFiles[selIndex - 1])\n\n    # check mods, if so then. . \n    changed = cmds.file(q=True, modified=True)\n    svState = True\n    if changed:\n        svState = save_current_dialog()\n    if svState:\n        of.run(filePath)\n    else:\n        return()\n\n\ndef save_current_dialog(*args):\n    save = cmds.confirmDialog(title=\"Save Confirmation\", message = \"Save current scene?\", button = (\"Save\", \"Don't Save\", \"Cancel\"), defaultButton = \"Save\", cancelButton = \"Cancel\", dismissString = \"Cancel\")\n    if save == \"Save\":\n        cmds.file(save=True)\n        return(True)\n    elif save == \"Don't Save\":\n        return(True)\n    else:\n        return(False)\n\n\ndef version_up(*args):\n    \"\"\"\n    versions the current file based on Zed's class/modules\n    \"\"\"\n\n    filePath = cmds.file(q=True, sn=True)\n    ver = vf.versionClass()\n    ver.versionUp(filePath)\n\n    load_asset_info()\n\n\ndef save_as_new(selectionBased=False, *args):\n\n    proj = ai.AssetInfo()\n\n    # construct the paths\n    filePath = None\n    selTab = cmds.tabLayout(widgets[\"assetsTab\"], q=True, st=True)\n    if selTab != \"STGS\":\n        tab, phase, assetPath, assetFiles = get_asset_info(proj)\n    else:\n        tab, phase, assetPath, assetFiles = get_stage_info(proj)\n\n    selItem = None\n    if cmds.textScrollList(widgets[\"filesTSL\"], q=True, sii=True):\n        selIndex = cmds.textScrollList(widgets[\"filesTSL\"], q=True, sii=True)[0]\n        selItem = cmds.textScrollList(widgets[\"filesTSL\"], q=True, si=True)[0]\n\n    if not selItem or selItem == \"No Files\":\n        if tab == \"CHARS\":\n            asset = cmds.textScrollList(widgets[\"charTSL\"], q=True, si=True)[0]\n        if tab == \"PROPS\":\n            asset = cmds.textScrollList(widgets[\"propTSL\"], q=True, si=True)[0]\n        if tab == \"SETS\":\n            asset = cmds.textScrollList(widgets[\"setTSL\"], q=True, si=True)[0]\n        if tab == \"STGS\":\n            asset = cmds.textScrollList(widgets[\"stageTSL\"], q=True, si=True)[0]\n\n        filename = \"{0}_main_{1}_Work_v0001.mb\".format(asset, phase)\n        filePath = uf.fix_path(os.path.join(assetPath, filename))\n\n    # or use the path from selections\n    else:\n        filePath = uf.fix_path(os.path.join(assetPath, assetFiles[selIndex - 1]))\n\n    savenewdata = snw.SaveNewAssetUI(filePath, selectionBased)\n\n    # # if file already exists then bail out\n    # if os.path.isfile(filePath):\n    #     cmds.confirmDialog(title=\"File Exists!\", message = \"This file type already exists, you should use the version up instead!\", button = (\"OK\"))\n    #     return()\n\n    # confirm = cmds.confirmDialog(title=\"Save Confirmation\", message = \"You are about to create:\\n{0}\\n\\nShould we continue?\".format(filePath), button = (\"Create\", \"Cancel\"), defaultButton = \"Save\", cancelButton = \"Cancel\", dismissString = \"Cancel\", bgc = (.6, .5, .5))\n    # if confirm == \"Create\":\n    #     write=True\n    # else:\n    #     write=False\n\n    # if write:\n    #     ver = vf.versionClass()\n    #     ver.versionUp(filePath)\n\n    # populate_files()\n\n\ndef fileManager(*args):\n    if cmds.window(\"saveAsWin\", exists=True):\n        cmds.deleteUI(\"saveAsWin\")\n    file_UI_create()",
+			"file": "fileManager.py",
+			"file_size": 21223,
+			"file_write_time": 131638102069291287,
+			"settings":
+			{
+				"buffer_size": 20658,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "setProject.py",
+			"settings":
+			{
+				"buffer_size": 1818,
 				"line_ending": "Windows"
 			}
 		}
@@ -567,14 +613,16 @@
 	],
 	"file_history":
 	[
-		"/C/Users/zethwillie/Desktop/git/froggerPipeline/fileManager.py",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/FroggerMenu_v01.py",
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Utilities/assetInfo.py",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/saveNewWindows.py",
-		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Utilities/utilityFunctions.py",
+		"/X/Production/Code/Maya/Scripts/Mel/collectTextures.mel",
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/fileManager.py",
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/setProject.py",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Publishing/AssetPublish.py",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Publishing/multiRefAnimExport.py",
-		"/C/Users/zethwillie/Desktop/git/froggerPipeline/setProject.py",
-		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Utilities/assetInfo.py",
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Utilities/utilityFunctions.py",
+		"/C/Users/zethwillie/Documents/maya/scripts/zbw_appendPath.py",
 		"/C/Users/zethwillie/Documents/maya/2016/scripts/userSetup.py",
 		"/X/Production/Assets/3D/Character/testAsset/Animation/Publish/FBX/multi_v0010/testAsset_multi_Fish_main_Rig1_fish.fbx",
 		"/X/Production/Assets/3D/Character/testAsset/Animation/Publish/FBX/main_v0024/testAsset_main_fox.fbx",
@@ -670,7 +718,6 @@
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/AssetPublish.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/versionFile_v02.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/fileManager_v03.py",
-		"/C/Users/zethwillie/Documents/maya/scripts/zbw_appendPath.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/userSetup.mel",
 		"/C/Users/zethwillie/Desktop/pipe/chrlx_pipe/masterWin.py",
 		"/C/Users/zethwillie/Desktop/pipe/chrlx_pipe/masterFuncs.py",
@@ -693,8 +740,7 @@
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/Utilities/versionFile_v01.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/saveSceneAsVersion_v02.py",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/saveSceneVersion_v02.py",
-		"/C/Users/zethwillie/Desktop/pipe/chrlx_pipe/assetWin.py",
-		"/C/Users/zethwillie/Desktop/zeth/froggerPipe/openUI.py"
+		"/C/Users/zethwillie/Desktop/pipe/chrlx_pipe/assetWin.py"
 	],
 	"find":
 	{
@@ -712,6 +758,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"bake_selected",
+			"check_format",
+			"assetPublish.publish_maya_scene",
 			"sp.",
 			"Frogger",
 			"environ",
@@ -836,10 +885,7 @@
 			"DoExport",
 			"gameExp_DoExport",
 			"anim_gameExporterExportBtn",
-			"button",
-			"anim*button",
-			"optionmenu",
-			"$node"
+			"button"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -857,7 +903,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -873,8 +919,8 @@
 						"selection":
 						[
 							[
-								682,
-								682
+								615,
+								615
 							]
 						],
 						"settings":
@@ -885,7 +931,152 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Publishing/multiRefAnimExport.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20765,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10687,
+								10687
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4446.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "todoList.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 669,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								544,
+								544
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Utilities/projectGlobals.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 796,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								316,
+								316
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "fileManager.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20658,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4460,
+								4460
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "setProject.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1818,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1270,
+								1270
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 270.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -972,7 +1163,7 @@
 		],
 		"width": 0.0
 	},
-	"selected_group": 1,
+	"selected_group": 0,
 	"settings":
 	{
 	},

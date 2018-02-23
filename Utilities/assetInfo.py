@@ -48,16 +48,16 @@ class AssetInfo(object):
                 stages (list) - list of stage names
                 i.e. [["Fish", "Cube"],["Ball"],["Waterfall"],["CloudStage"]]
         """
-
-        self.chars = [os.path.basename(x) for x in self.charsPaths]
-        self.props = [os.path.basename(x) for x in self.propsPaths]
-        self.sets = [os.path.basename(x) for x in self.setsPaths]
-        self.stages = [os.path.basename(x) for x in self.stagesPaths]
+        exclude = ["~StageTemplate~", "_Backup", "_old"]
+        self.chars = [os.path.basename(x) for x in self.charsPaths if os.path.basename(x) not in exclude]
+        self.props = [os.path.basename(x) for x in self.propsPaths if os.path.basename(x) not in exclude]
+        self.sets = [os.path.basename(x) for x in self.setsPaths if os.path.basename(x) not in exclude]
+        self.stages = [os.path.basename(x) for x in self.stagesPaths if os.path.basename(x) not in exclude]
         return(self.chars, self.props, self.sets, self.stages)
 
     def get_asset_contents(self, assetpath, *args):
         """
-        get asset contents for each area
+        get asset file contents for each area
         Args:
             assetpath (string) - the path to the top level of the asset folder ("X://.../Production/Assets/3D/Character/Fish")
         """

@@ -4,6 +4,7 @@ import os
 from functools import partial
 
 import fileManager as fm
+import Utilities.projectGlobals as pg
 
 widgets = {}
 
@@ -15,6 +16,7 @@ def set_project_UI(*args):
 	widgets["mainCLO"] = cmds.columnLayout(w=300, h=200)
 	cmds.text("Click the project you'll be working in", al="left")
 	cmds.separator(h=10)
+# procedularize this to pull from project globals, projectGlobals.projects dictionary	
 	widgets["frog"] = cmds.button(l="OutOfBoxExperience Project", w=300, h=40, bgc=(.5, .5, .5), c=partial(set_project_env_variables, "OutOfBoxExperience"))
 	widgets["fit"] = cmds.button(l="FitAndSetup Project", w=300, h=40, bgc=(.3, .3, .3), c=partial(set_project_env_variables, "FitAndSetup"))
 
@@ -35,17 +37,14 @@ def set_project_env_variables(proj = None, *args):
 	currProj = None
 	projPath = None
 
-	if proj == "OutOfBoxExperience":
-		currProj = "OutOfBoxExperience"
-		projPath = "X:/Production"
-	if proj == "FitAndSetup":
-		currProj = "FitAndSetup"
-		projPath = "Y:/Production"
+	if proj in pg.projects.keys():
+		currProj = proj
+		projPath = pg.projects[proj]
 
 	os.environ["MAYA_CURRENT_PROJECT"] = currProj
 	os.environ["MAYA_PROJECT_PATH"] = projPath
 
-	print "Set current project (MAYA_CURRENT_PROJECT env var) to {0}\nSet current project path (MAYA_PROJECT_PATH env var) to {1} ".format(currProj, projPath)
+	print "{0} is now the current project (MAYA_CURRENT_PROJECT env var)\n{1} is now the current project path (MAYA_PROJECT_PATH env var)".format(currProj, projPath)
 
 	if cmds.window("setProjectWin", exists=True):
 		cmds.deleteUI(widgets["win"])

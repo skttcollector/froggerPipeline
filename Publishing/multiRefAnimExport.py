@@ -255,6 +255,27 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, references=None, *args
     # cull out the bad references from our input list
     goodRefs = cull_bad_references(refs)
 
+
+# bake all jnts THEN do all the rest
+    for ref in goodRefs:
+        namespace = cmds.file(ref, q=True, ns=True)
+        print "BAKING JOINTS FOR: {0}".format(namespace)        
+        geoGrp = cmds.ls("{0}:GEO".format(namespace))
+        jntGrp = cmds.ls("{0}:EXPORT_JNT_Grp".format(namespace))        
+        
+        geos = child_match_check(geoGrp[0], "*_Geo_Grp")
+        roots = child_match_check(jntGrp[0], "*_Root_Jnt")
+
+        start, end = uf.get_frame_range()
+
+       # bake joints
+        for r in roots:
+            # get child roots if joints
+            allD = cmds.listRelatives(r, allDescendents=True)
+            jnts = [x for x in allD if cmds.objectType(x, isa="joint")]
+            # function to bake selected on all jnts under this root
+            bake_selected(jnts, start, end)
+
     for ref in goodRefs:
         pp = uf.PathParser(origScene)
         
@@ -278,14 +299,6 @@ def publish_fbx_anim_file(versionUp=True, origScene=None, references=None, *args
         tokens[-2] = namespace
 
         start, end = uf.get_frame_range()
-
-        # bake joints
-        for r in roots:
-            # get child roots if joints
-            allD = cmds.listRelatives(r, allDescendents=True)
-            jnts = [x for x in allD if cmds.objectType(x, isa="joint")]
-            # function to bake selected on all jnts under this root
-            bake_selected(jnts, start, end)
 
         # delete constraints
         cmds.delete(cmds.ls("{0}:*".format(namespace), type="constraint"))
@@ -393,7 +406,7 @@ def bake_selected(bakeList, start, end, *args):
             except:
                 pass
 
-    cmds.bakeResults(bakeList, t=(start, end), sm=1, sb=1, sac=0, mr=0)
+    cmds.bakeResults(bakeList, t=(start, end), simulation=1, sampleBy=1, sparseAnimCurveBake=0, minimizeRotation=1)
 
 
 def delete_other_top_level_nodes(keeplist, *args):

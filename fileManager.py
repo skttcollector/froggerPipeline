@@ -10,8 +10,7 @@ import Utilities.versionFile as vf
 import openSceneFile as of
 import Utilities.utilityFunctions as uf
 import saveNewWindows as snw
-reload(snw)
-
+import Utilities.projectGlobals as pg
 
 # TODO
 # image?
@@ -102,18 +101,10 @@ def file_UI_create(*args):
 
 def change_project(*args):
     project = cmds.optionMenu(widgets["projOM"], q=True, value=True)
-    if project == "OutOfBoxExperience":
-        currProj = "OutOfBoxExperience"
-        projPath = "X:/Production"
-    if project == "FitAndSetup":
-        currProj = "FitAndSetup"
-        projPath = "Y:/Production"
+    os.environ["MAYA_CURRENT_PROJECT"] = project
+    os.environ["MAYA_PROJECT_PATH"] = pg.projects[project]
 
-    os.environ["MAYA_CURRENT_PROJECT"] = currProj
-    os.environ["MAYA_PROJECT_PATH"] = projPath
-
-    cmds.warning("Set current project (MAYA_CURRENT_PROJECT env var) to {0}\nSet current project path (MAYA_PROJECT_PATH env var) to {1} ".format(currProj, projPath))    
-
+    print "{0} is now the current project (MAYA_CURRENT_PROJECT env var)\n{1} is now the current project path (MAYA_PROJECT_PATH env var)".format(project, pg.projects[project])   
     set_project()
     
 
@@ -125,7 +116,7 @@ def set_project(*args):
     """
     if "MAYA_CURRENT_PROJECT" in os.environ:
         ev = os.environ["MAYA_CURRENT_PROJECT"]
-        if ev == "OutOfBoxExperience" or ev=="FitAndSetup":
+        if ev in pg.projects.keys():
             cmds.optionMenu(widgets["projOM"], e=True, value=ev)
     else:
         cmds.optionMenu(widgets["projOM"], e=True, value="OutOfBoxExperience")

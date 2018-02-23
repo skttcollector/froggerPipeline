@@ -176,12 +176,13 @@ class SaveNewAssetUI(object):
             else:
                 return()
 
+        write = "Cancel"
         confirm = cmds.confirmDialog(title="Save Confirmation", message = "You are about to 'version up':\n{0}\n\nShould we continue?".format(filepath[:-9]), button = ("Create", "Cancel"), defaultButton = "Save", cancelButton = "Cancel", dismissString = "Cancel", bgc = (.6, .5, .5))
         if confirm == "Create":
-            write=True
+            write=="Save"
             print "Saving. . .: ", filepath            
         else:
-            write=False
+            write=="Cancel"
             print "Canceling. . ."
             cmds.deleteUI(self.win)
 
@@ -192,12 +193,12 @@ class SaveNewAssetUI(object):
             if tempScene and os.path.isfile(tempScene):
                 print "saveNewWindows.save_file: Cleaning up temp scene {0}".format(tempScene)
                 os.remove(tempScene)
+            cmds.confirmDialog(m="Save successful! You're now in file:\n{0}".format(cmds.file(q=True, sn=True)))
 
         # Try to refresh the file manager window
         if cmds.window("fileWin", exists=True):
             fm.fileManager()
 
-        cmds.confirmDialog(m="Save successful! You're now in file:\n{0}".format(cmds.file(q=True, sn=True)))
 
 def create_temp_scene(filepath, *args):
     tempFile = filepath[:-3] + "_temp.mb"
