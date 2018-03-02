@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"com",
+				"combined_rig_assemble_export"
+			],
+			[
 				"proje",
 				"projectGlobals"
 			],
@@ -510,10 +514,6 @@
 			[
 				"replace",
 				"replace_ref"
-			],
-			[
-				"ma",
-				"mainFLO"
 			]
 		]
 	},
@@ -523,15 +523,7 @@
 			"file": "/C/Users/zethwillie/Documents/maya/2016/scripts/userSetup.py",
 			"settings":
 			{
-				"buffer_size": 921,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Publishing/multiRefAnimExport.py",
-			"settings":
-			{
-				"buffer_size": 20765,
+				"buffer_size": 922,
 				"line_ending": "Windows"
 			}
 		},
@@ -539,18 +531,23 @@
 			"file": "todoList.py",
 			"settings":
 			{
-				"buffer_size": 669,
+				"buffer_size": 1117,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"contents": "project=\"Frogger\"\npadding=4\nfilefolder=\"scenes\"\ndefaultPath=\"//caddy/work/current/FROGGER_MAGFL-N400/Frogger/Production\"\nriggingPath=\"%s/Code/Maya/RiggingTools\"%defaultPath\n\n# project dictionary key=project name, value = project path\nprojects = {\"OutOfBoxExperience\":\"X:/Production\", \"FitAndSetup\":\"Y:/Production\"}\n\n# might need to the os.environ var to these paths if they're different for each project. . . \nrigFBXExport = \"X:/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/fbxPresets/rig_cm_triang_binary.fbxexportpreset\"\nanimFBXExport = \"X:/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/fbxPresets/anim_cm_triang_binary.fbxexportpreset\"\nmodelFBXExport = \"X:/Production/Code/Maya/Tools/PipelineTools/Python/Publishing/fbxPresets/model_cm_triang_binary.fbxexportpreset\"",
-			"file": "Utilities/projectGlobals.py",
-			"file_size": 810,
-			"file_write_time": 131638058772034958,
+			"file": "assetManager_v02.py",
 			"settings":
 			{
-				"buffer_size": 796,
+				"buffer_size": 22524,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Utilities/utilityFunctions.py",
+			"settings":
+			{
+				"buffer_size": 9040,
 				"line_ending": "Windows"
 			}
 		},
@@ -613,14 +610,15 @@
 	],
 	"file_history":
 	[
-		"/C/Users/zethwillie/Desktop/git/froggerPipeline/FroggerMenu_v01.py",
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Publishing/multiRefAnimExport.py",
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Utilities/projectGlobals.py",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Utilities/assetInfo.py",
+		"/C/Users/zethwillie/Desktop/git/froggerPipeline/FroggerMenu_v01.py",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/saveNewWindows.py",
 		"/X/Production/Code/Maya/Scripts/Mel/collectTextures.mel",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/fileManager.py",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/setProject.py",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Publishing/AssetPublish.py",
-		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Publishing/multiRefAnimExport.py",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Utilities/utilityFunctions.py",
 		"/C/Users/zethwillie/Documents/maya/scripts/zbw_appendPath.py",
 		"/C/Users/zethwillie/Documents/maya/2016/scripts/userSetup.py",
@@ -628,7 +626,6 @@
 		"/X/Production/Assets/3D/Character/testAsset/Animation/Publish/FBX/main_v0024/testAsset_main_fox.fbx",
 		"/X/Production/Assets/3D/Character/testAsset/Rigging/Publish/FBX/testAsset_otherVariant_Rigging_fox_v0004.fbx",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Utilities/userSetup.py",
-		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Utilities/projectGlobals.py",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/Publishing/fbxPresets/anim_cm_ascii_trigulate_noInputs.fbxexportpreset",
 		"/X/Production/Code/Maya/Tools/PipelineTools/Python/FroggerMenu_v01.py",
 		"/C/Users/zethwillie/Desktop/git/froggerPipeline/fileManager_v07.py",
@@ -758,6 +755,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"publish_fbx_folder",
 			"bake_selected",
 			"check_format",
 			"assetPublish.publish_maya_scene",
@@ -884,8 +882,7 @@
 			"ProvideUniqueName",
 			"DoExport",
 			"gameExp_DoExport",
-			"anim_gameExporterExportBtn",
-			"button"
+			"anim_gameExporterExportBtn"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -912,15 +909,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 921,
+						"buffer_size": 922,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								615,
-								615
+								236,
+								236
 							]
 						],
 						"settings":
@@ -931,24 +928,52 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Publishing/multiRefAnimExport.py",
+					"file": "todoList.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 20765,
+						"buffer_size": 1117,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								10687,
-								10687
+								784,
+								784
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "assetManager_v02.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 22524,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -958,35 +983,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 4446.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "todoList.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 669,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								544,
-								544
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 10977.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -994,30 +991,32 @@
 				},
 				{
 					"buffer": 3,
-					"file": "Utilities/projectGlobals.py",
+					"file": "Utilities/utilityFunctions.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 796,
+						"buffer_size": 9040,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								316,
-								316
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 600.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -1047,7 +1046,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -1063,8 +1062,8 @@
 						"selection":
 						[
 							[
-								1270,
-								1270
+								1360,
+								1360
 							]
 						],
 						"settings":
@@ -1073,10 +1072,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 270.0,
+						"translation.y": 180.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -1120,7 +1119,7 @@
 		"rows":
 		[
 			0.0,
-			0.902955665024,
+			0.651085930123,
 			1.0
 		]
 	},
