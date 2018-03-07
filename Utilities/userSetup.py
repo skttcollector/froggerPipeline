@@ -1,7 +1,7 @@
 import maya.cmds as mc
 import maya.mel as mel
 import sys
-import setProject as sp
+# import setProject as sp
 import os
 
 pipelineTools=r"\\caddy\work\current\FROGGER_MAGFL-N400\Frogger\Production\Code\Maya\Tools\PipelineTools\Python"
