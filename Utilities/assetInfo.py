@@ -48,7 +48,7 @@ class AssetInfo(object):
                 stages (list) - list of stage names
                 i.e. [["Fish", "Cube"],["Ball"],["Waterfall"],["CloudStage"]]
         """
-        exclude = ["~StageTemplate~", "_Backup", "_old"]
+        exclude = ["~StageTemplate~", "_Backup", "_old", "~.txt"]
         self.chars = [os.path.basename(x) for x in self.charsPaths if os.path.basename(x) not in exclude]
         self.props = [os.path.basename(x) for x in self.propsPaths if os.path.basename(x) not in exclude]
         self.sets = [os.path.basename(x) for x in self.setsPaths if os.path.basename(x) not in exclude]
