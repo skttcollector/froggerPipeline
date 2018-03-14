@@ -2,9 +2,10 @@
 GENERIC:
     check out game exporter stuff re: 2017, 2018
     documentation
+    asset info - have some string to delineate what folders/files to skip over ("~", "_") when parsing for assets/names, etc
 
 PIPELINE:
-    more generic way to get/set env variables - mostly there. . . 
+    more generic way to get/set env variables - mostly there already. . . 
     do fileManager (where it gets buttons, procedural buttons), if there is something in the variables, then don't need the change project window?
     call set project in the user setup properly    
 
